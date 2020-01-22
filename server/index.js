@@ -59,7 +59,9 @@ app.get('/api/rentals', (req, res, next) => {
             "p"."total",
             "p"."startDate",
             "p"."endDate",
-            "c"."image",
+            "c"."make",
+            "c"."availability",
+            "c"."image"
         FROM "cars" as "c"
         JOIN "rentals" as "p" using ("cartId")
       WHERE "p"."userId" = $1
