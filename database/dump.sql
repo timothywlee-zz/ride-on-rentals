@@ -73,7 +73,7 @@ CREATE TABLE public.cars (
     year integer NOT NULL,
     "shortDescription" text NOT NULL,
     "topSpeed" integer NOT NULL,
-    "horsePower" text NOT NULL,
+    "horsePower" integer NOT NULL,
     rate integer NOT NULL,
     mpg integer NOT NULL,
     category text NOT NULL,
@@ -278,4 +278,3 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-

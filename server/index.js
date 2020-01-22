@@ -2,6 +2,7 @@ require('dotenv/config');
 const express = require('express');
 
 const db = require('./database');
+const format = require('pg-format');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
@@ -20,21 +21,56 @@ app.get('/api/health-check', (req, res, next) => {
 });
 
 app.get('/api/cars', (req, res, next) => {
-  const getAllCarsSql = `
-    SELECT *
-      FROM "cars"
-  `;
-  db.query(getAllCarsSql)
-    .then(result => res.json(result.rows))
-    .catch(err => next(err));
+  const { category, orderBy } = req.query;
+  if (category && !orderBy) {
+    const sql = format(
+      'select * from %I where %I = %L;',
+      'cars', 'category', category
+    );
+    db.query(sql)
+      .then(result => {
+        res.status(200).json(result.rows);
+      })
+      .catch(err => next(err));
+  } else if (!category && orderBy) {
+    const sql = format(
+      'select * from %I order by %I desc;',
+      'cars', orderBy
+    );
+    db.query(sql)
+      .then(result => {
+        res.status(200).json(result.rows);
+      })
+      .catch(err => next(err));
+  } else if (category && orderBy) {
+    const sql = format(
+      'select * from "cars" where "category" = %L order by %I desc;',
+      category, orderBy
+    );
+    db.query(sql)
+      .then(result => {
+        res.status(200).json(result.rows);
+      })
+      .catch(err => next(err));
+  } else {
+    const sql = 'select * from "cars";';
+    db.query(sql)
+      .then(result => {
+        res.status(200).json(result.rows);
+      })
+      .catch(err => next(err));
+  }
 });
 
 app.get('/api/cars/:carId', (req, res, next) => {
   const { carId } = req.params;
   const idIsValid = typeof parseInt(carId) === 'number' && carId > 0;
   if (idIsValid) {
-    const sql = 'SELECT * FROM "cars" WHERE "carId" = $1;';
-    db.query(sql, [carId])
+    const sql = format(
+      'select * from %I where %I = %L;',
+      'cars', 'carId', carId
+    );
+    db.query(sql)
       .then(result => {
         const car = result.rows[0];
         if (!car) {
