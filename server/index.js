@@ -48,6 +48,34 @@ app.get('/api/cars/:carId', (req, res, next) => {
   }
 });
 
+app.get('/api/rentals', (req, res, next) => {
+  const { userId } = req.session;
+
+  if (userId) {
+    const pastRentalSql = `
+      SELECT "p"."rentalId",
+            "p"."userId",
+            "p"."carId",
+            "p"."total",
+            "p"."startDate",
+            "p"."endDate",
+            "c"."image",
+        FROM "cars" as "c"
+        JOIN "rentals" as "p" using ("cartId")
+      WHERE "p"."userId" = $1
+    `;
+    const params = [userId];
+
+    db.query(pastRentalSql, params)
+      .then(result => {
+        res.status(200).json(result.rows);
+      })
+      .catch(err => next(err));
+  } else {
+    throw (new ClientError(`Cannot find ${userId} in database`, 400));
+  }
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
