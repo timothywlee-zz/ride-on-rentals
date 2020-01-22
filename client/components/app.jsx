@@ -1,4 +1,5 @@
 import React from 'react';
+import HeaderTitle from './header';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -18,8 +19,10 @@ export default class App extends React.Component {
   }
 
   render() {
-    return this.state.isLoading
-      ? <h1>Testing connections...</h1>
-      : <h1>{this.state.message}</h1>;
+    return (
+      <div>
+        <HeaderTitle text="Super Car Experience" />
+      </div>
+    );
   }
 }
