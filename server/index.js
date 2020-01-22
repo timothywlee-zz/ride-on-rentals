@@ -22,18 +22,19 @@ app.get('/api/health-check', (req, res, next) => {
 
 app.get('/api/cars', (req, res, next) => {
   const { category, orderBy } = req.query;
-
   if (category && !orderBy) {
-    const sql = `SELECT * FROM "cars" WHERE "category" = $1;
-    `;
-    db.query(sql, [category])
+    const sql = format(
+      'select * from %I where %I = %L;',
+      'cars', 'category', category
+    );
+    db.query(sql)
       .then(result => {
         res.status(200).json(result.rows);
       })
       .catch(err => next(err));
   } else if (!category && orderBy) {
     const sql = format(
-      'select * from %I order by %I desc',
+      'select * from %I order by %I desc;',
       'cars', orderBy
     );
     db.query(sql)
@@ -43,7 +44,7 @@ app.get('/api/cars', (req, res, next) => {
       .catch(err => next(err));
   } else if (category && orderBy) {
     const sql = format(
-      'select * from "cars" where "category" = %L order by %I desc',
+      'select * from "cars" where "category" = %L order by %I desc;',
       category, orderBy
     );
     db.query(sql)
@@ -58,6 +59,28 @@ app.get('/api/cars', (req, res, next) => {
         res.status(200).json(result.rows);
       })
       .catch(err => next(err));
+  }
+});
+
+app.get('/api/cars/:carId', (req, res, next) => {
+  const { carId } = req.params;
+  const idIsValid = typeof parseInt(carId) === 'number' && carId > 0;
+  if (idIsValid) {
+    const sql = format(
+      'select * from %I where %I = %L;',
+      'cars', 'carId', carId
+    );
+    db.query(sql)
+      .then(result => {
+        const car = result.rows[0];
+        if (!car) {
+          return Promise.reject(new ClientError(`Cannot find a car with Id ${carId}`, 404));
+        }
+        return res.status(200).json(car);
+      })
+      .catch(err => next(err));
+  } else {
+    return next(new ClientError('Id must be a positive integer.', 400));
   }
 });
 
