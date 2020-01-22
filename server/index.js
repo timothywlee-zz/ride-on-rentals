@@ -29,25 +29,6 @@ app.get('/api/cars', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/cars/:carId', (req, res, next) => {
-  const { carId } = req.params;
-  const idIsValid = typeof parseInt(carId) === 'number' && carId > 0;
-  if (idIsValid) {
-    const sql = 'SELECT * FROM "cars" WHERE "carId" = $1;';
-    db.query(sql, [carId])
-      .then(result => {
-        const car = result.rows[0];
-        if (!car) {
-          return Promise.reject(new ClientError(`Cannot find a car with Id ${carId}`, 404));
-        }
-        return res.status(200).json(car);
-      })
-      .catch(err => next(err));
-  } else {
-    return next(new ClientError('Id must be a positive integer.', 400));
-  }
-});
-
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
