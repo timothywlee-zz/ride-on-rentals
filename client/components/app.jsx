@@ -20,9 +20,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <HeaderTitle text="Super Car Experience" />
-      </div>
+      </React.Fragment>
     );
   }
 }
