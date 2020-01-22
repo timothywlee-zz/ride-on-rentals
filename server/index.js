@@ -19,6 +19,17 @@ app.get('/api/health-check', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// GET request for all information
+app.get('/api/cars', (req, res, next) => {
+  const getAllCarsSql = `
+    SELECT *
+      FROM "cars"
+  `;
+  db.query(getAllCarsSql)
+    .then(result => res.json(result.rows))
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
