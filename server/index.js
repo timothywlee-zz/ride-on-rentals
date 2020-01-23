@@ -87,7 +87,7 @@ app.get('/api/cars/:carId', (req, res, next) => {
 app.get('/api/rentals', (req, res, next) => {
   const { userId } = req.session;
 
-  if (req.session.userId) {
+  if (userId) {
     const dbRentalsColumns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
     const dbCarsColumns = ['make', 'availability', 'image'];
     const userId = [req.session.userId];
