@@ -196,7 +196,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN "userId" SET DEFAULT nextval('public.
 --
 
 COPY public.cars ("carId", make, image, year, "shortDescription", "topSpeed", "horsePower", rate, mpg, category, availability) FROM stdin;
-1   Porsche 918	/images/porsche-918.jpg	2015	The Porsche 918 Spyder is a mid-engine plug-in hybrid sports car manufactured by German automobile manufacturer Porsche.	214	887	2000	22	Hypercar	f
+1	Porsche 918	/images/porsche-918.jpg	2015	The Porsche 918 Spyder is a mid-engine plug-in hybrid sports car manufactured by German automobile manufacturer Porsche.	214	887	2000	22	Hypercar	f
 2	Ferrari La Ferrari	/images/ferrari-la-ferrari.jpg	2016	LaFerrari, project name F150 (also unofficially referred to as the Ferrari LaFerrari or Ferrari F150), is a limited production hybrid sports car built by Italian automotive manufacturer Ferrari.	218	949	2000	13	Hypercar	f
 3	Pagani Huayra	/images/pagani-huayra.jpg	2017	The Pagani Huayra, it’s the successor to the almighty Pagani Zonda and it’s named after a South American wind god called Huayra Tata. 	210	700	1500	16	Supercar	f
 4	Bugatti Chiron	/images/bugatti-chiron.jpg	2018	The Bugatti Chiron is a mid-engine two-seater sports car developed and manufactured in Molsheim, France by French automobile manufacturer Bugatti Automobiles S.A.S..	261	1500	2500	10	Supercar	f
@@ -282,3 +282,4 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
+
