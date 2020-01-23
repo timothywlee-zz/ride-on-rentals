@@ -114,6 +114,30 @@ app.get('/api/rentals', (req, res, next) => {
   }
 });
 
+app.post('/api/rentals', (req, res, next) => {
+  const { userId } = req.session;
+  const { carId, total, startDate, endDate } = req.body;
+  if (!userId) {
+    throw new ClientError('User must have a valid Id to make a reservation.', 400);
+  } else if (!carId || !total || !startDate || !endDate) {
+    throw new ClientError('User must fill all available fields to make a reservation.', 400);
+  } else {
+    const columns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
+    const values = [userId, carId, total, startDate, endDate];
+    const sql = format(`
+      insert into %I (%I)
+      values (default, %L)
+      returning *;`,
+    'rentals', columns, values
+    );
+    db.query(sql)
+      .then(response => {
+        res.status(201).json(response.rows[0]);
+      })
+      .catch(err => next(err));
+  }
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
