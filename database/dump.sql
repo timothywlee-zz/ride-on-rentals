@@ -220,6 +220,10 @@ COPY public.rentals ("rentalId", "userId", "carId", total, "startDate", "endDate
 --
 
 COPY public.users ("userId", "firstName", "lastName", email, password, photo, verified) FROM stdin;
+13	Ethan	Cordes	ethancordes7@gmail.com	$2b$10$qmrvjGSas7gFURkHQvLzROJ6L9bLcCnvoR9YCL3msuD11Od.7cF2W	\N	f
+14	Kamryn	Min	kamrynmin@gmail.com	$2b$10$CEADljyNemEFj.QFGyZ0xOVQO9zo7hn44RLVKMZbj84eZtw//b2JG	\N	f
+15	Andrew	Robins	h.andrew.robins@gmail.com	$2b$10$gLx2iqKEDhMiCvBLFQoVregayHM0lJ90eVEbeQ1nVTyWpZ1TmydBa	\N	f
+16	Timothy	Lee	timothylee3508@gmail.com	$2b$10$ByARktkawlVXh3.DyfySL.b0aaQykQDZinZ4C4./1GUIvuBSWwBbK	\N	f
 \.
 
 
@@ -234,14 +238,14 @@ SELECT pg_catalog.setval('public."cars_carId_seq"', 1, false);
 -- Name: rentals_rentalId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."rentals_rentalId_seq"', 1, false);
+SELECT pg_catalog.setval('public."rentals_rentalId_seq"', 3, true);
 
 
 --
 -- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."users_userId_seq"', 1, false);
+SELECT pg_catalog.setval('public."users_userId_seq"', 16, true);
 
 
 --
@@ -278,3 +282,4 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
+
