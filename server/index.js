@@ -92,11 +92,11 @@ app.get('/api/rentals', (req, res, next) => {
     const dbCarsColumns = ['make', 'availability', 'image'];
     const userId = [req.session.userId];
     const sql = format(`
-        SELECT "p".%I,
+        SELECT "r".%I,
                "c".%I
           FROM "cars" as "c"
-          JOIN "rentals" as "p" using (%I)
-         WHERE "p".%I = %L;`,
+          JOIN "rentals" as "r" using (%I)
+         WHERE "r".%I = %L;`,
     dbRentalsColumns, dbCarsColumns, 'carId', 'userId', userId
     );
 
