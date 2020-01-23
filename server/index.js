@@ -2,6 +2,7 @@ require('dotenv/config');
 const express = require('express');
 
 const db = require('./database');
+const bcrypt = require('bcrypt');
 const format = require('pg-format');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
@@ -29,7 +30,8 @@ app.get('/api/cars', (req, res, next) => {
     );
     db.query(sql)
       .then(result => {
-        res.status(200).json(result.rows);
+        const cars = result.rows;
+        res.json(cars);
       })
       .catch(err => next(err));
   } else if (!category && orderBy) {
@@ -39,7 +41,8 @@ app.get('/api/cars', (req, res, next) => {
     );
     db.query(sql)
       .then(result => {
-        res.status(200).json(result.rows);
+        const cars = result.rows;
+        res.json(cars);
       })
       .catch(err => next(err));
   } else if (category && orderBy) {
@@ -49,14 +52,18 @@ app.get('/api/cars', (req, res, next) => {
     );
     db.query(sql)
       .then(result => {
-        res.status(200).json(result.rows);
+        const cars = result.rows;
+        res.json(cars);
       })
       .catch(err => next(err));
   } else {
-    const sql = 'select * from "cars";';
+    const sql = `
+      select * from "cars";
+    `;
     db.query(sql)
       .then(result => {
-        res.status(200).json(result.rows);
+        const cars = result.rows;
+        res.json(cars);
       })
       .catch(err => next(err));
   }
@@ -65,89 +72,83 @@ app.get('/api/cars', (req, res, next) => {
 app.get('/api/cars/:carId', (req, res, next) => {
   const { carId } = req.params;
   const idIsValid = typeof parseInt(carId) === 'number' && carId > 0;
-  if (idIsValid) {
-    const sql = format(
-      'select * from %I where %I = %L;',
-      'cars', 'carId', carId
-    );
-    db.query(sql)
-      .then(result => {
-        const car = result.rows[0];
-        if (!car) {
-          return Promise.reject(new ClientError(`Cannot find a car with Id ${carId}`, 404));
-        }
-        return res.status(200).json(car);
-      })
-      .catch(err => next(err));
-  } else {
+  if (!idIsValid) {
     return next(new ClientError('Id must be a positive integer.', 400));
   }
+  const sql = format(
+    `select * from "cars"
+      where "carId" = %L;`, carId
+  );
+  db.query(sql)
+    .then(result => {
+      const car = result.rows[0];
+      if (!car) {
+        throw new ClientError(`Cannot find a car with Id ${carId}.`, 404);
+      }
+      return res.json(car);
+    })
+    .catch(err => next(err));
 });
 
 app.get('/api/rentals', (req, res, next) => {
   const { userId } = req.session;
-
-  if (userId) {
-    const dbRentalsColumns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
-    const dbCarsColumns = ['make', 'availability', 'image'];
-    const userId = [req.session.userId];
-    const sql = format(`
-        SELECT "r".%I,
-               "c".%I
-          FROM "cars" as "c"
-          JOIN "rentals" as "r" using (%I)
-         WHERE "r".%I = %L;`,
-    dbRentalsColumns, dbCarsColumns, 'carId', 'userId', userId
-    );
-
-    db.query(sql)
-      .then(result => {
-        const userRentals = [];
-        userRentals.push(result.rows);
-        res.status(200).json(userRentals);
-      })
-      .catch(err => next(err));
-  } else {
-    throw (new ClientError(`Cannot find ${userId} in database`, 400));
+  if (!userId) {
+    return next(new ClientError('Invalid userId.', 400));
   }
+  const dbRentalsColumns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
+  const dbCarsColumns = ['make', 'availability', 'image'];
+  const sql = format(`
+    select "r".%I,
+            "c".%I
+      from "cars" as "c"
+      join "rentals" as "r" using (%I)
+      where "r".%I = %L;`,
+  dbRentalsColumns, dbCarsColumns, 'carId', 'userId', userId
+  );
+  db.query(sql)
+    .then(result => {
+      const pastRentals = result.rows;
+      res.json(pastRentals);
+    })
+    .catch(err => next(err));
 });
 
 app.post('/api/rentals', (req, res, next) => {
   const { userId } = req.session;
   const { carId, total, startDate, endDate } = req.body;
   if (!userId) {
-    throw new ClientError('User must have a valid Id to make a reservation.', 400);
+    return next(new ClientError('User must have a valid Id.', 400));
   } else if (!carId || !total || !startDate || !endDate) {
-    throw new ClientError('User must fill all available fields to make a reservation.', 400);
+    return next(new ClientError('User must fill all fields.', 400));
   } else {
     const dbColumns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
     const rentalDetails = [userId, carId, total, startDate, endDate];
     const sql = format(`
       insert into %I (%I)
       values (default, %L)
-      returning *;`,
-    'rentals', dbColumns, rentalDetails
+      returning *;`, 'rentals', dbColumns, rentalDetails
     );
     db.query(sql)
       .then(response => {
         const rentalConfirmation = response.rows[0];
         if (!rentalConfirmation) {
-          return Promise.reject(new ClientError('An unexpected error occured.', 500));
-        } else {
-          const sql = format(`
-            update %I set %I = %L where %I = %L returning %I;`,
-          'cars', 'availability', 'false', 'carId', carId, 'availability'
-          );
-          db.query(sql)
-            .then(response => {
-              const { availability: isAvailable } = response.rows[0];
-              if (!isAvailable) {
-                return res.status(200).json(rentalConfirmation);
-              }
-              return Promise.reject(new ClientError('An unexpected error occured.', 500));
-            })
-            .catch(err => next(err));
+          throw new ClientError('An unexpected error occured.', 500);
         }
+        const sql = format(`
+          update "cars"
+              set "availability" = %L
+            where "carId"        = %L
+        returning "availability";`, 'false', carId
+        );
+        db.query(sql)
+          .then(response => {
+            const { availability: isAvailable } = response.rows[0];
+            if (isAvailable) {
+              throw new ClientError('An unexpected error occured.', 500);
+            }
+            res.json(rentalConfirmation);
+          })
+          .catch(err => next(err));
       })
       .catch(err => next(err));
   }
@@ -155,29 +156,32 @@ app.post('/api/rentals', (req, res, next) => {
 
 app.post('/api/users', (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
-
-  if (firstName && lastName && email && password) {
-    const dbColumns = ['firstName', 'lastName', 'email', 'password'];
-    const accountDetails = [firstName, lastName, email, password];
-    const sql = format(`
-         INSERT INTO %I (%I)
-              VALUES (%L)
-           RETURNING "userId";`,
-    'users', dbColumns, accountDetails
-    );
-    db.query(sql)
-      .then(result => {
-        if (!result.rows[0]) {
-          next(new ClientError('Cannot find the created account details'), 404);
-        } else {
-          return res.status(200).json(result.rows[0]);
-        }
-      })
-      .catch(err => next(err));
-  } else {
-    throw (new ClientError(`Cannot find all of ${firstName}, ${lastName}, ${email}, and ${password} in database`, 400));
-
-  }
+  bcrypt
+    .hash(password, 10)
+    .then((hash, err) => {
+      if (err) throw err;
+      if (firstName && lastName && email && hash) {
+        const dbColumns = ['firstName', 'lastName', 'email', 'password'];
+        const accountDetails = [firstName, lastName, email, hash];
+        const sql = format(`
+          insert into %I (%I)
+          values (%L)
+        returning "userId";`, 'users', dbColumns, accountDetails
+        );
+        db.query(sql)
+          .then(result => {
+            const user = result.rows[0];
+            if (!user) {
+              throw new ClientError('Cannot find the created account details', 404);
+            }
+            res.json(user);
+          })
+          .catch(err => next(err));
+      } else {
+        throw new ClientError(`Cannot find all of ${firstName}, ${lastName}, ${email}, and ${password} in database`, 400);
+      }
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
