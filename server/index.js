@@ -115,6 +115,7 @@ app.get('/api/rentals', (req, res, next) => {
 });
 
 app.post('/api/rentals', (req, res, next) => {
+  req.session.userId = 5;
   const { userId } = req.session;
   const { carId, total, startDate, endDate } = req.body;
   if (!userId) {
@@ -122,17 +123,34 @@ app.post('/api/rentals', (req, res, next) => {
   } else if (!carId || !total || !startDate || !endDate) {
     throw new ClientError('User must fill all available fields to make a reservation.', 400);
   } else {
-    const columns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
-    const values = [userId, carId, total, startDate, endDate];
+    const dbColumns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
+    const rentalDetails = [userId, carId, total, startDate, endDate];
     const sql = format(`
       insert into %I (%I)
       values (default, %L)
       returning *;`,
-    'rentals', columns, values
+    'rentals', dbColumns, rentalDetails
     );
     db.query(sql)
       .then(response => {
-        res.status(201).json(response.rows[0]);
+        const rentalConfirmation = response.rows[0];
+        if (!rentalConfirmation) {
+          return Promise.reject(new ClientError('An unexpected error occured.', 500));
+        } else {
+          const sql = format(`
+            update %I set %I = %L where %I = %L returning %I;`,
+          'cars', 'availability', 'false', 'carId', carId, 'availability'
+          );
+          db.query(sql)
+            .then(response => {
+              const { availability: isAvailable } = response.rows[0];
+              if (!isAvailable) {
+                return res.status(200).json(rentalConfirmation);
+              }
+              return Promise.reject(new ClientError('An unexpected error occured.', 500));
+            })
+            .catch(err => next(err));
+        }
       })
       .catch(err => next(err));
   }
