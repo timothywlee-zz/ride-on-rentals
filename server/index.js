@@ -104,13 +104,39 @@ app.get('/api/rentals', (req, res, next) => {
     `;
     const params = [userId];
 
-    db.query(pastRentalSql, params)
+    db.query(pastRentalSql, params);
+    const userRentals = []
       .then(result => {
+        userRentals.push(result);
         res.status(200).json(result.rows);
       })
       .catch(err => next(err));
   } else {
     throw (new ClientError(`Cannot find ${userId} in database`, 400));
+  }
+});
+
+app.post('/api/users', (req, res, next) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  if (firstName && lastName && email && password) {
+    const createAccountSql = `
+      INSERT INTO "users" ("firstName", "lastName", "email", "password")
+           VALUES ($1, $2, $3, $4)
+        RETURNING "userId"
+    `;
+    const params = [firstName, lastName, email, password];
+    db.query(createAccountSql, params)
+      .then(result => {
+        if (!result.rows[0]) {
+          next(new ClientError('Cannot find the created account details'), 404);
+        } else {
+          return res.status(200).json(result.rows[0]);
+        }
+      })
+      .catch(err => next(err));
+  } else {
+    throw (new ClientError(`Cannot find all of ${firstName}, ${lastName}, ${email}, and ${password} in database`, 400));
   }
 });
 
