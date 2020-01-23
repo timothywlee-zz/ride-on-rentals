@@ -184,6 +184,43 @@ app.post('/api/users', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/auth', (req, res, next) => {
+  const { email, password } = req.body;
+  bcrypt
+    .hash(password, 10)
+    .then((hash, err) => {
+      if (err) throw err;
+      if (email && password) {
+        const sql = format(`
+          select *
+            from "users"
+           where "email" = %L;`, email
+        );
+        db.query(sql)
+          .then(result => {
+            const user = result.rows[0];
+            if (!user) {
+              throw new ClientError('Email or password is not correct', 404);
+            }
+            const { password: dbPassword, userId } = user;
+            bcrypt
+              .compare(password, dbPassword)
+              .then(response => {
+                if (response) {
+                  req.session.userId = userId;
+                  res.json(user);
+                } else {
+                  throw new ClientError('Email or password is not correct', 404);
+                }
+              })
+              .catch(err => next(err));
+          })
+          .catch(err => next(err));
+      }
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
