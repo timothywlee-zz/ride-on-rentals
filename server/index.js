@@ -176,8 +176,8 @@ app.post('/api/users', (req, res, next) => {
       .catch(err => next(err));
   } else {
     throw (new ClientError(`Cannot find all of ${firstName}, ${lastName}, ${email}, and ${password} in database`, 400));
-
   }
+
 });
 
 app.use('/api', (req, res, next) => {
