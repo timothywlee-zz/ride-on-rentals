@@ -115,7 +115,6 @@ app.get('/api/rentals', (req, res, next) => {
 });
 
 app.post('/api/rentals', (req, res, next) => {
-  req.session.userId = 5;
   const { userId } = req.session;
   const { carId, total, startDate, endDate } = req.body;
   if (!userId) {
