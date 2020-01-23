@@ -88,25 +88,23 @@ app.get('/api/rentals', (req, res, next) => {
   const { userId } = req.session;
 
   if (userId) {
-    const pastRentalSql = `
-      SELECT "p"."rentalId",
-            "p"."userId",
-            "p"."carId",
-            "p"."total",
-            "p"."startDate",
-            "p"."endDate",
-            "c"."make",
-            "c"."availability",
-            "c"."image"
-        FROM "cars" as "c"
-        JOIN "rentals" as "p" using ("cartId")
-      WHERE "p"."userId" = $1
-    `;
-    const params = [userId];
+    const dbRentalsColumns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
+    const dbCarsColumns = ['make', 'availability', 'image'];
+    const userId = [req.session.userId];
+    const sql = format(`
+        SELECT "p".%I,
+               "c".%I
+          FROM "cars" as "c"
+          JOIN "rentals" as "p" using (%I)
+         WHERE "p".%I = %L;`,
+    dbRentalsColumns, dbCarsColumns, 'carId', 'userId', userId
+    );
 
-    db.query(pastRentalSql, params)
+    db.query(sql)
       .then(result => {
-        res.status(200).json(result.rows);
+        const userRentals = [];
+        userRentals.push(result.rows);
+        res.status(200).json(userRentals);
       })
       .catch(err => next(err));
   } else {
@@ -152,6 +150,33 @@ app.post('/api/rentals', (req, res, next) => {
         }
       })
       .catch(err => next(err));
+  }
+});
+
+app.post('/api/users', (req, res, next) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  if (firstName && lastName && email && password) {
+    const dbColumns = ['firstName', 'lastName', 'email', 'password'];
+    const accountDetails = [firstName, lastName, email, password];
+    const sql = format(`
+         INSERT INTO %I (%I)
+              VALUES (%L)
+           RETURNING "userId";`,
+    'users', dbColumns, accountDetails
+    );
+    db.query(sql)
+      .then(result => {
+        if (!result.rows[0]) {
+          next(new ClientError('Cannot find the created account details'), 404);
+        } else {
+          return res.status(200).json(result.rows[0]);
+        }
+      })
+      .catch(err => next(err));
+  } else {
+    throw (new ClientError(`Cannot find all of ${firstName}, ${lastName}, ${email}, and ${password} in database`, 400));
+
   }
 });
 
