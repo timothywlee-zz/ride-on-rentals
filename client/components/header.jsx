@@ -2,10 +2,12 @@ import React from 'react';
 
 function HeaderTitle(props) {
   return (
-    <nav className="navbar navbar-dark bg-dark">
-      <a className="col"> {props.text}</a>
-    </nav>
-  );
+    <nav className="navbar fixed-top navbar-dark">
+      <div></div>
+      <a className="navbar-brand" style={{ color: 'white' }}>{props.text}</a>
+      <a className="col-1 fas fa-bars" style={{ color: 'white', width: '2rem' }}></a>
+    </nav>);
+
 }
 
 export default HeaderTitle;

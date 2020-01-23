@@ -1,5 +1,6 @@
 import React from 'react';
 import HeaderTitle from './header';
+import CarList from './car-list';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -20,9 +21,10 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <HeaderTitle text="Super Car Experience" />
-      </div>
+        <CarList />
+      </React.Fragment>
     );
   }
 }
