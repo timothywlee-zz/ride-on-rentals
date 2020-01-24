@@ -5,7 +5,8 @@ function CarListItem(props) {
   return (
     <div
       className="card mb-2 p-2"
-      style={{ height: '100%' }}>
+      style={{ height: '100%' }}
+      onClick={() => props.history.push(`/cars/${props.carId}`)}>
       <img
         src={props.image}
         className="card-img-top"
@@ -19,7 +20,9 @@ function CarListItem(props) {
           <h6 className="card-title col-6">
             {props.make}
           </h6>
-          <h6 className="card-title text-right col-6">
+          <h6
+            style={props.availability ? { color: 'green' } : { color: 'red' }}
+            className="card-title text-right col-6">
             {status}
           </h6>
         </div>

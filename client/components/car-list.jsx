@@ -33,7 +33,7 @@ export default class CarList extends React.Component {
   displayCars() {
     const { cars } = this.state;
     return cars.map(car => {
-      return <CarListItem key={car.carId} {...car}/>;
+      return <CarListItem key={car.carId} {...car} history={this.props.history}/>;
     });
   }
 
