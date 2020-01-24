@@ -10,7 +10,7 @@ function CarListItem(props) {
         src={props.image}
         className="card-img-top"
         style={{
-          objectFit: 'cover',
+          objectFit: 'contain',
           height: '15em'
         }}>
       </img>
@@ -19,7 +19,7 @@ function CarListItem(props) {
           <h6 className="card-title col-6">
             {props.make}
           </h6>
-          <h6 className="card-title text-right col-6">
+          <h6 className="card-title text-right col-6" style={props.availability ? { color: 'green' } : { color: 'red' }}>
             {status}
           </h6>
         </div>
