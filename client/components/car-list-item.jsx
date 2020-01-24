@@ -11,7 +11,7 @@ function CarListItem(props) {
         src={props.image}
         className="card-img-top"
         style={{
-          objectFit: 'cover',
+          objectFit: 'contain',
           height: '15em'
         }}>
       </img>
