@@ -1,3 +1,53 @@
-.navbar{
-  background-color: black
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  background-image: url("images/bugatti-chiron.jpg");
+  background-position: top;
+  background-size: cover;
+}
+
+#root {
+  height: 100%;
+  background: linear-gradient(180deg, rgba(178, 173, 163, 0.5) 15.1%, rgba(81, 73, 65, 0.5) 100%), rgba(238, 243, 243, 0.651);
+}
+
+.title {
+  font-size: 1.25em;
+}
+
+.nav-btn {
+  position: absolute;
+  font-size: 1.25em;
+  right: 0;
+}
+
+.home-title {
+  position: relative;
+  letter-spacing: .2em;
+  font-size: 2em;
+}
+
+.home-title::after {
+  content: "YOUR";
+  position: absolute;
+  top: 75px;
+  right: -30px;
+  transform: scale(.65);
+}
+
+.container-vertical {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
 }
