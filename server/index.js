@@ -85,7 +85,7 @@ app.get('/api/cars/:carId', (req, res, next) => {
       if (!car) {
         throw new ClientError(`Cannot find a car with Id ${carId}.`, 404);
       }
-      return res.json(car);
+      res.json(car);
     })
     .catch(err => next(err));
 });
@@ -120,103 +120,90 @@ app.post('/api/rentals', (req, res, next) => {
     return next(new ClientError('User must have a valid Id.', 400));
   } else if (!carId || !total || !startDate || !endDate) {
     return next(new ClientError('User must fill all fields.', 400));
-  } else {
-    const dbColumns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
-    const rentalDetails = [userId, carId, total, startDate, endDate];
-    const sql = format(`
+  }
+  const dbColumns = ['rentalId', 'userId', 'carId', 'total', 'startDate', 'endDate'];
+  const rentalDetails = [userId, carId, total, startDate, endDate];
+  const sql = format(`
       insert into %I (%I)
       values (default, %L)
       returning *;`, 'rentals', dbColumns, rentalDetails
-    );
-    db.query(sql)
-      .then(response => {
-        const rentalConfirmation = response.rows[0];
-        if (!rentalConfirmation) {
-          throw new ClientError('An unexpected error occured.', 500);
-        }
-        const sql = format(`
+  );
+  db.query(sql)
+    .then(response => {
+      const rentalConfirmation = response.rows[0];
+      const sql = format(`
           update "cars"
               set "availability" = %L
             where "carId"        = %L
         returning "availability";`, 'false', carId
-        );
+      );
+      return (
         db.query(sql)
-          .then(response => {
-            const { availability: isAvailable } = response.rows[0];
-            if (isAvailable) {
-              throw new ClientError('An unexpected error occured.', 500);
-            }
-            res.json(rentalConfirmation);
-          })
-          .catch(err => next(err));
-      })
-      .catch(err => next(err));
-  }
+          .then(() => res.json(rentalConfirmation))
+      );
+    })
+    .catch(err => next(err));
 });
 
 app.post('/api/users', (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
+  if (!firstName || !lastName || !email || !password) {
+    return next(new ClientError('User must fill all fields.', 400));
+  }
   bcrypt
     .hash(password, 10)
-    .then((hash, err) => {
-      if (err) throw err;
-      if (firstName && lastName && email && hash) {
-        const dbColumns = ['firstName', 'lastName', 'email', 'password'];
-        const accountDetails = [firstName, lastName, email, hash];
-        const sql = format(`
+    .then(hash => {
+      const dbColumns = ['firstName', 'lastName', 'email', 'password'];
+      const accountDetails = [firstName, lastName, email, hash];
+      const sql = format(`
           insert into %I (%I)
           values (%L)
         returning "userId";`, 'users', dbColumns, accountDetails
-        );
+      );
+      return (
         db.query(sql)
           .then(result => {
             const user = result.rows[0];
-            if (!user) {
-              throw new ClientError('Cannot find the created account details', 404);
-            }
             res.json(user);
-          })
-          .catch(err => next(err));
-      } else {
-        throw new ClientError(`Cannot find all of ${firstName}, ${lastName}, ${email}, and ${password} in database`, 400);
-      }
+          }));
     })
     .catch(err => next(err));
 });
 
 app.post('/api/auth', (req, res, next) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    return next(new ClientError('User must have email and password to login.', 400));
+  }
   bcrypt
     .hash(password, 10)
-    .then((hash, err) => {
-      if (err) throw err;
-      if (email && password) {
-        const sql = format(`
+    .then(hash => {
+      const sql = format(`
           select *
             from "users"
            where "email" = %L;`, email
-        );
+      );
+      return (
         db.query(sql)
           .then(result => {
             const user = result.rows[0];
             if (!user) {
-              throw new ClientError('Email or password is not correct', 404);
+              throw new ClientError('Email or password is not correct', 400);
             }
             const { password: dbPassword, userId } = user;
-            bcrypt
-              .compare(password, dbPassword)
-              .then(response => {
-                if (response) {
+            return (
+              bcrypt
+                .compare(password, dbPassword)
+                .then(response => {
+                  if (!response) {
+                    throw new ClientError('Email or password is not correct', 400);
+                  }
                   req.session.userId = userId;
-                  res.json(user);
-                } else {
-                  throw new ClientError('Email or password is not correct', 404);
-                }
-              })
-              .catch(err => next(err));
+                  return res.json(user);
+                })
+            );
           })
-          .catch(err => next(err));
-      }
+      );
     })
     .catch(err => next(err));
 });
