@@ -12,15 +12,17 @@ export default class App extends React.Component {
   render() {
     return (
       <Router>
-        <HeaderTitle text="Super Cars Experience"/>
-        <Switch>
-          <Route exact path="/">
-            <Home/>
-          </Route>
-          <Route path="/cars">
-            <CarList />
-          </Route>
-        </Switch>
+        <div className="container-fluid p-0" >
+          <HeaderTitle text="Super Cars Experience"/>
+          <Switch>
+            <Route exact path="/">
+              <Home/>
+            </Route>
+            <Route exact path="/cars">
+              <CarList />
+            </Route>
+          </Switch>
+        </div>
       </Router>
     );
   }
