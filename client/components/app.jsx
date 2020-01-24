@@ -2,9 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  Redirect
+  Route
 } from 'react-router-dom';
 import HeaderTitle from './header';
 import CarList from './car-list';
@@ -14,6 +12,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Router>
+        <HeaderTitle text="Super Cars Experience"/>
         <Switch>
           <Route exact path="/">
             <Home/>

@@ -1,22 +1,20 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect
-} from 'react-router-dom';
-import CarList from './car-list';
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link,
+//   Redirect
+// } from 'react-router-dom';
 
 class Home extends React.Component {
   render() {
     return (
-      <>
-        <h1>Home Page</h1>
-        <button>
-          <Link to="/cars">Cars</Link>
-        </button>
-      </>
+      <div className="container-vertical">
+        <div className="home-title py-5">DISCOVER</div>
+        <div className="home-title">CAROUSEL</div>
+        <div className="home-title">VIEW CARS</div>
+      </div>
     );
   }
 }
