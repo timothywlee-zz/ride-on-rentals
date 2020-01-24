@@ -1,14 +1,31 @@
 import React from 'react';
 
 function CarListItem(props) {
-  const rate = `$${(props.rate)}`;
+  const status = props.availability ? 'Available' : 'Unavailable';
   return (
-    <div className="card" style={{ width: '23rem' }} >
-      <img src={props.image} className="card-img-top img-responsive fit-image"></img>
+    <div
+      className="card mb-2 p-2"
+      style={{ height: '100%' }}>
+      <img
+        src={props.image}
+        className="card-img-top"
+        style={{
+          objectFit: 'cover',
+          height: '15em'
+        }}>
+      </img>
       <div className="card-body">
-        <p className="rate-text">{rate}</p>
-        <h5 className="card-title">{props.make}</h5>
-        <p className="card-text">{props.shortDescription}</p>
+        <div className="row">
+          <h6 className="card-title col-6">
+            {props.make}
+          </h6>
+          <h6 className="card-title text-right col-6">
+            {status}
+          </h6>
+        </div>
+        <div className="card-text">
+          {props.shortDescription}
+        </div>
       </div>
     </div>
   );

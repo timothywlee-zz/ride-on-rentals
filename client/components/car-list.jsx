@@ -1,4 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch
+} from 'react-router-dom';
 import CarListItem from './car-list-item';
 
 export default class CarList extends React.Component {
@@ -7,7 +15,6 @@ export default class CarList extends React.Component {
     this.state = {
       cars: []
     };
-    this.getCars = this.getCars.bind(this);
   }
 
   componentDidMount() {
@@ -17,34 +24,26 @@ export default class CarList extends React.Component {
   getCars() {
     fetch('/api/cars')
       .then(response => response.json())
-      .then(data => {
-        this.setState({ cars: data });
+      .then(cars => {
+        this.setState({ cars });
       })
       .catch(error => console.error(error));
   }
 
+  displayCars() {
+    const { cars } = this.state;
+    return cars.map(car => {
+      return <CarListItem key={car.carId} {...car}/>;
+    });
+  }
+
   render() {
-    const arrayOfCars = this.state.cars;
     return (
-      <div className="row mt-5">{
-        arrayOfCars.map(car => {
-          return (
-            <div key={car.carId} className="card col-4">
-              <CarListItem
-                productId={car.carId}
-                make={car.make}
-                rate={car.rate}
-                year={car.year}
-                image={car.image}
-                shortDescription={car.shortDescription}
-                topSpeed={car.topSpeed}
-                availability={car.availability}
-                mpg={car.mpg}
-              />
-            </div>
-          );
-        })
-      }
+      <div className="container-fluid mt-5 px-0"
+        style={{ height: '90vh', overflow: 'auto' }}>
+        <div className="container flex-column px-2">
+          {this.displayCars()}
+        </div>
       </div>
     );
   }
