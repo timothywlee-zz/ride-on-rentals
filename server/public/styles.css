@@ -4,18 +4,19 @@
 }
 
 body{
+  position: fixed;
   margin: 0;
   padding: 0;
-  height: 100vh;
   width: 100%;
-  background-image: url("images/bugatti-chiron.jpg");
+  height: 100vh;
   background-position: top;
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("images/ford-mustang-shelby-gt350.jpg");
 }
 
 #root {
   height: 100%;
-  background: linear-gradient(180deg, rgba(178, 173, 163, 0.5) 15.1%, rgba(81, 73, 65, 0.5) 100%), rgba(238, 243, 243, 0.651);
+  background: linear-gradient(180deg, rgba(178, 173, 163, 0.5) 15.1%, rgba(81, 73, 65, 0.5) 100%), rgba(238, 243, 243, 0.45);
 }
 
 .title {
@@ -23,31 +24,43 @@ body{
 }
 
 .nav-btn {
-  position: absolute;
-  font-size: 1.25em;
   right: 0;
+  font-size: 1.25em;
+  position: absolute;
 }
 
 .home-title {
   position: relative;
-  letter-spacing: .2em;
-  font-size: 2em;
-}
-
-.home-title::after {
-  content: "YOUR";
-  position: absolute;
-  top: 75px;
-  right: -30px;
-  transform: scale(.65);
+  font-size: 2.25em;
+  letter-spacing: .3em;
 }
 
 .container-vertical {
   width: 100%;
-  position: relative;
+  height: 70vh;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
   align-items: center;
-  align-content: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.carousel {
+  opacity: .5;
+  width: 100%;
+  height: 30vh;
+  color: white;
+  line-height: 30vh;
+  vertical-align: 15vh;
+  text-align: center;
+  background-color: rgb(66, 66, 66);
+}
+
+#view-cars {
+  outline: 0;
+  border: none;
+  font-size: 1.8em;
+  background: none;
+  position: relative;
+  letter-spacing: .2em;
 }
