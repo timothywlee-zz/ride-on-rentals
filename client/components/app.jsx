@@ -4,9 +4,10 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import HeaderTitle from './header';
-import CarList from './car-list';
 import Home from './home-page';
+import CarList from './car-list';
+import HeaderTitle from './header';
+import Details from './car-details';
 
 export default class App extends React.Component {
   render() {
@@ -15,12 +16,9 @@ export default class App extends React.Component {
         <div className="container-fluid p-0" >
           <HeaderTitle text="Super Cars Experience"/>
           <Switch>
-            <Route exact path="/">
-              <Home/>
-            </Route>
-            <Route exact path="/cars">
-              <CarList />
-            </Route>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/cars" component={CarList}/>
+            <Route exact path="/cars/:id" component={Details}/>
           </Switch>
         </div>
       </Router>
