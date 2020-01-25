@@ -26,10 +26,10 @@ class Details extends React.Component {
       : <div className="container">
 
         <div className="card p-2">
-        <div class ="iframe-container">
-        <iframe src="http://www.youtube.com/embed/uHke3z0Bb-8?start=14&end=47&autoplay=1&loop=1" 
-          width="560" height="315" frameborder="0"></iframe>
-        </div>/>
+          <div className ="iframe-container">
+            <iframe src="http://www.youtube.com/embed/uHke3z0Bb-8?start=14&end=47&autoplay=1&loop=1"
+              width="560" height="315" frameBorder="0"></iframe>
+          </div>/>
           <div className="card-body">
             <div className="row">
               <h6 className="card-title col-6">
