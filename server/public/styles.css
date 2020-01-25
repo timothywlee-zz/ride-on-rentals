@@ -85,3 +85,83 @@ body{
   margin-right: -1px;
   margin-left: -1px;
 }
+
+.side-drawer{
+  z-index: 2;
+  height: 100%;
+  background-color: white;
+  box-shadow: 2px 0px 5px black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  transform: translateX(10%);
+  transition: transform 0.3s ease-out;
+}
+.NavBarContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+.NavBarUpperText{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5vh;
+  margin-top: 2vh;
+  height: 25vh;
+  width: 90%;
+  color: black;
+  font-size: 2.5vh;
+  text-align: center;
+}
+
+.NavBarMiddleText{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2vh;
+  width: 90%;
+  color: black;
+  text-align: center;
+}
+
+.NavBarButtonContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 0 6vh;
+}
+
+
+.logIn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  height: 5vh;
+  border: 2px solid black;
+  width: 90%;
+}
+
+.signUp{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  border: 2px solid black;
+  height: 5vh;
+  width: 90%;
+}
+
+.NavBarLowerText{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  width: 90%;
+  font-size: 1.3vh;
+}
