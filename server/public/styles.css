@@ -70,6 +70,14 @@ body{
   letter-spacing: .2em;
 }
 
+.see-thru {
+  opacity: 0.4;
+}
+
+.opaque{
+  opacity:1.0;
+
+
 .mainCarouselItem {
   height: 32vh;
 
