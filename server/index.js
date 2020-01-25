@@ -90,6 +90,27 @@ app.get('/api/cars/:carId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/users/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  const idIsValid = typeof parseInt(userId) === 'number' && userId > 0;
+  if (!idIsValid) {
+    return next(new ClientError('Id must be a positive integer.', 400));
+  }
+  const sql = format(
+    `select * from "users"
+      where "userId" = %L;`, userId
+  );
+  db.query(sql)
+    .then(result => {
+      const user = result.rows[0];
+      if (!user) {
+        throw new ClientError(`Cannot find a car with Id ${userId}.`, 404);
+      }
+      res.json(user);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/rentals', (req, res, next) => {
   const { userId } = req.session;
   if (!userId) {
