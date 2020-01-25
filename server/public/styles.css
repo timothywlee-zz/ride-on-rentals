@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+}
+
+.bg-img {
+  height: 100%;
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("images/home-bg.jpg");
+}
+
+.bg-filter {
+  height: 100%;
+  background: linear-gradient(180deg, rgba(178, 173, 163, 0.5) 15.1%, rgba(81, 73, 65, 0.5) 100%), rgba(238, 243, 243, 0.45);
+}
+
+.title {
+  font-size: 1.25em;
+}
+
+.nav-btn {
+  right: 0;
+  font-size: 1.25em;
+  position: absolute;
+}
+
+.home-title {
+  position: relative;
+  font-size: 2rem;
+  letter-spacing: .3em;
+}
+
+.container-vertical {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.carousel {
+  opacity: 100%;
+  width: 100%;
+  height: 32vh;
+  color: white;
+  background-color: rgb(66, 66, 66);
+}
+
+#view-cars {
+  outline: 0;
+  border: none;
+  font-size: 1.8em;
+  background: none;
+  position: relative;
+  letter-spacing: .2em;
+}
+
+.see-thru {
+  opacity: 0.4;
+}
+
+.opaque{
+  opacity:1.0;
+
+
+.mainCarouselItem {
+  height: 32vh;
+
+}
+.mainCarouselImage{
+  object-fit: cover;
+  width: 100%;
+  height: 32vh;
+}
+
+.mainCarouselIndicator{
+  height: 1vh;
+  width: 30%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: -5%;
+  left: 35%;
+}
+.row {
+  margin-right: -1px;
+  margin-left: -1px;
+}
