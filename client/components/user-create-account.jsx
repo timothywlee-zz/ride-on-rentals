@@ -83,7 +83,8 @@ class CreateAccount extends React.Component {
             <div> Password </div>
             <input type='text' className='border' value={password} onChange={this.passwordInput} />
           </form>
-
+          <div> We will never share your data with a third party. </div>
+          <div> Sign Up </div>
         </div>
       </div>
     );
