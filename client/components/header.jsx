@@ -1,5 +1,5 @@
 import React from 'react';
-import NavLoginSignUp from './navbar-login-signup';
+import NavMenu from './nav-menu';
 
 class HeaderTitle extends React.Component {
   constructor(props) {
@@ -7,21 +7,32 @@ class HeaderTitle extends React.Component {
     this.state = {
       drawerClicked: false
     };
+    this.drawerToggleClickHandler = this.drawerToggleClickHandler.bind(this);
+  }
+
+  drawerToggleClickHandler() {
+    this.setState(prevState => { return { drawerClicked: !prevState.drawerClicked }; });
   }
 
   render() {
+    const { drawerClicked } = this.state;
     return (
       <nav className="navbar navbar-dark bg-dark justify-content-center text-light py-2">
         <div className="title">Super Car Experience</div>
-        {this.state.drawerClicked
+        {drawerClicked
           ? (
-            <NavLoginSignUp/>
+            <div>
+              <NavMenu
+                drawerOpen={this.drawerToggleClickHandler}
+                show={drawerClicked} />
+              <Backdrop />
+            </div>
           )
           : (
             <i
               className = "nav-btn fas fa-bars pr-3"
               style = {{ cursor: 'pointer' }}
-              onClick={() => this.setState({ drawerClicked: true })}>
+              onClick={this.drawerToggleClickHandler}>
             </i>
           )
         }
@@ -29,5 +40,7 @@ class HeaderTitle extends React.Component {
     );
   }
 }
+
+const Backdrop = () => <div className='backdrop' />;
 
 export default HeaderTitle;
