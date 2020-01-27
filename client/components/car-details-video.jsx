@@ -24,10 +24,9 @@ class Details extends React.Component {
     return !car
       ? <div>Loading...</div>
       : <div className="container">
-
         <div className="card p-2">
           <div className ="iframe-container">
-            <iframe src="http://www.youtube.com/embed/uHke3z0Bb-8?start=14&end=47&autoplay=1&loop=1"
+            <iframe src= "http://www.youtube.com/embed/uHke3z0Bb-8?start=14&end=47&autoplay=1&loop=1"
               width="560" height="315" frameBorder="0"></iframe>
           </div>/>
           <div className="card-body">
@@ -51,6 +50,9 @@ class Details extends React.Component {
             <div className="card-text">
               Rate: ${car.rate} / day
             </div>
+            <Link to="http://www.youtube.com/embed/uHke3z0Bb-8?start=14&end=47&autoplay=1&loop=1">
+              <button id="view-video">VIEW video</button>
+            </Link>
           </div>
         </div>
       </div>;
@@ -58,3 +60,5 @@ class Details extends React.Component {
 }
 
 export default Details;
+
+{ /* <button onclick='playVideoClip'>Video</button> */ }

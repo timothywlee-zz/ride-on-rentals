@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Details extends React.Component {
+class Details1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = { car: null };
@@ -40,6 +40,8 @@ class Details extends React.Component {
                 {car.status}
               </h6>
             </div>
+            <button onClick='playVideoClip'>Video</button>
+
             <div className="card-text">
               {car.shortDescription}
             </div>
@@ -58,4 +60,4 @@ class Details extends React.Component {
   }
 }
 
-export default Details;
+export default Details1;
