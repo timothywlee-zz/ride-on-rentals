@@ -27,13 +27,14 @@ class NavMenu extends React.Component {
   }
 
   render() {
-    const { userLoggedIn, logInClicked, signUpClicked } = this.state;
+    // const { userLoggedIn, logInClicked, signUpClicked } = this.state;
+    const { userLoggedIn } = this.state;
     return (
       <nav
         className={this.props.show ? 'side-drawer open' : 'side-drawer'}>
         {userLoggedIn
-          ? <UserIsLoggedIn drawerOpen={this.props.drawerOpen} show={this.props.show}/>
-          : <UserLoginSignUpPage drawerOpen={this.props.drawerOpen} show={this.props.show} logInClickHandler={this.logInClickHandler} signUpClickHandler={this.signUpClickHandler}/>
+          ? <UserIsLoggedIn drawerOpen={this.props.drawerOpen} show={this.props.show} />
+          : <UserLoginSignUpPage drawerOpen={this.props.drawerOpen} show={this.props.show} logInClickHandler={this.logInClickHandler} signUpClickHandler={this.signUpClickHandler} />
         }
       </nav>
     );
@@ -61,7 +62,7 @@ function UserLoginSignUpPage(props) {
         <Link to='/createaccount' className='signUp'>
           <div
             onClick={props.signUpClickHandler}>
-          SIGN UP
+            SIGN UP
           </div>
         </Link>
       </div>
@@ -69,7 +70,6 @@ function UserLoginSignUpPage(props) {
     </>
   );
 }
-
 // add function when user is logged in here
 function UserIsLoggedIn(props) {
   return (
@@ -85,8 +85,4 @@ function UserIsLoggedIn(props) {
     </div>
   );
 }
-
 export default NavMenu;
-
-
-//test

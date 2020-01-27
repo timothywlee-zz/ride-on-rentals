@@ -76,12 +76,12 @@ body{
 
 .opaque{
   opacity:1.0;
-
+}
 
 .mainCarouselItem {
   height: 32vh;
-
 }
+
 .mainCarouselImage{
   object-fit: cover;
   width: 100%;
