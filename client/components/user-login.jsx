@@ -39,12 +39,12 @@ class UserLogIn extends React.Component {
         <div className='welcomeBackText'> Welcome Back </div>
         <div className='userLogInEmailPassword d-flex flex-column'>
           <form className='d-flex flex-column' onSubmit={this.submitUserInformation}>
-            <div>Email</div>
             <label>
+              Email
               <input name='email' type='text' className='userLogInEmail border' value={email} onChange={this.infoInput} />
             </label>
-            <div> Password </div>
             <label>
+              Password
               <input name='password' type='text' className='userLogInPassword border' value={password} onChange={this.infoInput}/>
             </label>
             <button className='userLogInLogIn mt-2' value='submit'> LOG IN </button>

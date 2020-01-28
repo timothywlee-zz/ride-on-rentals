@@ -94,24 +94,24 @@ class CreateAccount extends React.Component {
         <div className='createAccountUpperText'> Let&apos;s Get Started </div>
         <form className='d-flex flex-column form-group' onSubmit={this.createUserAccount}>
           <div className='userCreateFirstLastNameContainer d-flex flex-row'>
-            <div className='userCreateFirstContainer d-flex flex-column'>
-              <div> First Name</div>
+            <label className='userCreateFirstContainer d-flex flex-column'>
+              First Name
               <input name='firstName' type='text' className={`userCreateFirstInput border ${checkFirstNameInput}`} value={firstName} onChange={this.infoInput} />
-            </div>
-            <div className='userCreateLastContainer d-flex flex-column'>
-              <div> Last Name </div>
+            </label>
+            <label className='userCreateLastContainer d-flex flex-column'>
+              Last Name
               <input name='lastName' type='text' className={`userCreateLastInput border ${checkLastNameInput}`} value={lastName} onChange={this.infoInput} />
-            </div>
+            </label>
           </div>
-          <div className='userCreateEmailContainer d-flex flex-column'>
-            <div> Email </div>
+          <label className='userCreateEmailContainer d-flex flex-column'>
+            Email
             <input name='email' type='text' className={`userCreateEmailInput border ${checkEmailInput}`} value={email} onChange={this.infoInput} />
             {!validEmail ? <div className='mx-4' style={{ fontSize: '1.2vh', color: '#AC1E1E' }}> Email must be a valid address, e.g. me@mydomain.com </div> : null }
-          </div>
-          <div className='userCreatePasswordContainer d-flex flex-column'>
-            <div> Password </div>
+          </label>
+          <label className='userCreatePasswordContainer d-flex flex-column'>
+            Password
             <input name='password' type='text' className={`userCreatePasswordInput border ${checkPasswordInput}`} value={password} onChange={this.infoInput} />
-          </div>
+          </label>
           <div className='userCreateText1'> We will never share your data with a third party. </div>
           <button className='userCreateSignUp'> SIGN UP </button>
         </form>
