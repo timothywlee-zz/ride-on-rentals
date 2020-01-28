@@ -191,6 +191,32 @@ app.post('/api/users', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/auth', (req, res, next) => {
+  if (!req.session.userId) {
+    return res.json({ user: null });
+  }
+  const sql = `
+    select "u"."userId",
+           "u"."firstName",
+           "u"."lastName",
+           "u"."email",
+           "u"."verified"
+      from "users" as "u"
+     where "userId" = $1
+     group by "u"."userId"
+     limit 1
+  `;
+  const params = [req.session.userId];
+  db
+    .query(sql, params)
+    .then(result => {
+      const user = result.rows[0];
+      req.session.userId = user.userId;
+      res.json({ user });
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/auth', (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -227,6 +253,11 @@ app.post('/api/auth', (req, res, next) => {
       );
     })
     .catch(err => next(err));
+});
+
+app.delete('/api/auth', (req, res, next) => {
+  delete req.session.userId;
+  return res.status(204).json({ user: null });
 });
 
 app.use('/api', (req, res, next) => {

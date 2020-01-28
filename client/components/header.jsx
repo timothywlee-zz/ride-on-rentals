@@ -1,5 +1,6 @@
 import React from 'react';
 import NavMenu from './nav-menu';
+import AppContext from '../lib/context';
 
 class Header extends React.Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class Header extends React.Component {
       drawerClicked: false
     };
     this.drawerToggleClickHandler = this.drawerToggleClickHandler.bind(this);
+    this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
     this.goBack = this.goBack.bind(this);
   }
 
@@ -17,6 +19,13 @@ class Header extends React.Component {
 
   goBack() {
     this.props.history.goBack();
+  }
+
+  isUserAuthenticated() {
+    if (!this.context.user) {
+      return this.drawerToggleClickHandler();
+    }
+    return this.props.history.push('/user');
   }
 
   render() {
@@ -30,11 +39,11 @@ class Header extends React.Component {
           className={`back-btn fas fa-chevron-left pl-3 ${displayBackButton}`}>
         </i>
         <div className="title">{this.props.title}</div>
-       <i
-         className={`account-btn fas fa-user pr-3 ${displayUserButton}`}
-              style = {{ cursor: 'pointer' }}
-              onClick={this.drawerToggleClickHandler}>
-            </i>
+        <i
+          className={`account-btn fas fa-user pr-3 ${displayUserButton}`}
+          style = {{ cursor: 'pointer' }}
+          onClick={this.isUserAuthenticated}>
+        </i>
         {drawerClicked
           ? (
             <div>
@@ -54,5 +63,7 @@ class Header extends React.Component {
 }
 
 const Backdrop = () => <div className='backdrop' />;
+
+Header.contextType = AppContext;
 
 export default Header;
