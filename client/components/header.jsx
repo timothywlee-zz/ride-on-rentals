@@ -19,6 +19,11 @@ class HeaderTitle extends React.Component {
     return (
       <nav className="navbar navbar-dark bg-dark justify-content-center text-light py-2">
         <div className="title">Super Car Experience</div>
+        <i
+          className="nav-btn fas fa-bars pr-3"
+          style={{ cursor: 'pointer' }}
+          onClick={this.drawerToggleClickHandler}>
+        </i>
         {drawerClicked
           ? (
             <div>
@@ -29,11 +34,7 @@ class HeaderTitle extends React.Component {
             </div>
           )
           : (
-            <i
-              className = "nav-btn fas fa-bars pr-3"
-              style = {{ cursor: 'pointer' }}
-              onClick={this.drawerToggleClickHandler}>
-            </i>
+            <div className='d-none'></div>
           )
         }
       </nav>
