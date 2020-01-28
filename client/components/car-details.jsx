@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  BrowserRouter as Link
+} from 'react-router-dom';
 
 class Details extends React.Component {
   constructor(props) {
@@ -64,7 +67,9 @@ class Details extends React.Component {
         <div className="d-flex flex-column align-items-center " >
           <div className="btn-group text-center" >
             <button type="button" className="btn btn-sm btn-outline-secondary">Video</button>
-            <button type="button" className="btn btn-sm btn-outline-secondary">Book Now</button>
+            <Link to="/reservations">
+              <button type="button" className="btn btn-sm btn-outline-secondary">Book Now</button>
+            </Link>
             <button type="button" className="btn btn-sm btn-outline-secondary">Back</button>
           </div>
         </div>
