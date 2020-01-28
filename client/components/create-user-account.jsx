@@ -40,11 +40,11 @@ class CreateAccount extends React.Component {
     const { firstName, lastName, email, password } = this.state;
     const firstNameIsValid = firstName.length >= 2 && firstName.length <= 32;
     const lastNameIsValid = lastName.length >= 2 && lastName.length <= 32;
-    const validateEmailRegex = RegExp(/^([a-z\d\.-_]{1,64})@([a-z\d\-]{1,227})\.([a-z]{2,28})$/);
+    const validateEmailRegex = RegExp(/^([a-z\d\.\-\_]{1,64})@([a-z\d\-]{1,227})\.([a-z]{2,28})$/);
     // const validatePasswordRegex = RegExp(//);
 
     if (event.target.name === 'firstName') {
-      if (!firstNameIsValid) {
+      if (!firstNameIsValid.test(firstName)) {
         this.setState({ validFirstName: false });
       } else {
         this.setState({ validFirstName: true });
