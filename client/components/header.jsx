@@ -17,7 +17,7 @@ class HeaderTitle extends React.Component {
   render() {
     const { drawerClicked } = this.state;
     return (
-      <nav className="navbar navbar-dark bg-dark justify-content-center text-light py-2">
+      <nav className="navbar navbar-dark justify-content-center text-light py-2 header">
         <div className="title">Super Car Experience</div>
         {drawerClicked
           ? (
@@ -30,7 +30,7 @@ class HeaderTitle extends React.Component {
           )
           : (
             <i
-              className = "nav-btn fas fa-bars pr-3"
+              className = "nav-btn fas fa-user pr-3"
               style = {{ cursor: 'pointer' }}
               onClick={this.drawerToggleClickHandler}>
             </i>

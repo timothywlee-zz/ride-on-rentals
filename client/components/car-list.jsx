@@ -120,7 +120,7 @@ export default class CarList extends React.Component {
       <React.Fragment>
         <SearchFilter filterCars={this.filterCars}/>
         <div
-          className="container-fluid px-0"
+          className="container-fluid px-0 carlist-bg"
           style={{ height: '88vh', overflow: 'auto' }}>
           <div className="container flex-column px-2">
             {this.displayCars()}
