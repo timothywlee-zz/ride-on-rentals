@@ -8,8 +8,6 @@ import Home from './home-page';
 import CarList from './car-list';
 import HeaderTitle from './header';
 import Details from './car-details';
-import UserLogIn from './user-login';
-import CreateAccount from './user-create-account';
 
 export default class App extends React.Component {
   render() {
@@ -21,8 +19,6 @@ export default class App extends React.Component {
             <Route exact path="/" component={Home}/>
             <Route exact path="/cars" component={CarList}/>
             <Route exact path="/cars/:id" component={Details}/>
-            <Route exact path="/userlogin" component={UserLogIn} />
-            <Route exact path="/createaccount" component={CreateAccount} />
           </Switch>
         </div>
       </Router>
