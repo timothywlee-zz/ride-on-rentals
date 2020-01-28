@@ -44,7 +44,7 @@ class CreateAccount extends React.Component {
     // const validatePasswordRegex = RegExp(//);
 
     if (event.target.name === 'firstName') {
-      if (!firstNameIsValid.test(firstName)) {
+      if (!firstNameIsValid) {
         this.setState({ validFirstName: false });
       } else {
         this.setState({ validFirstName: true });
