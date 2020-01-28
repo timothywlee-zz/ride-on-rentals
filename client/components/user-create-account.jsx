@@ -9,83 +9,54 @@ class CreateAccount extends React.Component {
       email: '',
       password: ''
     };
-    this.firstNameInput = this.firstNameInput.bind(this);
-    this.lastNameInput = this.lastNameInput.bind(this);
-    this.emailInput = this.emailInput.bind(this);
-    this.passwordInput = this.passwordInput.bind(this);
-    this.firstNameSubmit = this.firstNameSubmit.bind(this);
-    this.lastNameSubmit = this.lastNameSubmit.bind(this);
-    this.emailSubmit = this.emailSubmit.bind(this);
-    this.passwordSubmit = this.passwordSubmit.bind(this);
+    this.infoInput = this.infoInput.bind(this);
+    // this.submitNewUserInformation = this.submitNewUserInformation.bind(this);
   }
 
-  firstNameInput(event) {
-    this.setState({ firstName: event.target.value });
+  infoInput(event) {
+    this.setState({ [event.target.name]: event.target.value})
   }
 
-  lastNameInput(event) {
-    this.setState({ lastName: event.target.value });
-  }
+  // submitNewUserInformation({
 
-  emailInput(event) {
-    this.setState({ email: event.target.value });
-  }
+  // })
 
-  passwordInput(event) {
-    this.setState({ password: event.target.value });
-  }
-
-  firstNameSubmit(event) {
-    event.preventDefault();
-    this.setState({ firstName: '' });
-  }
-
-  lastNameSubmit(event) {
-    event.preventDefault();
-    this.setState({ lastName: '' });
-  }
-
-  emailSubmit(event) {
-    event.preventDefault();
-    this.setState({ email: '' });
-  }
-
-  passwordSubmit(event) {
-    event.preventDefault();
-    this.setState({ password: '' });
-  }
 
   render() {
     const { firstName, lastName, email, password } = this.state;
     return (
-      <div className='container' style={{ height: '1000px', backgroundColor: 'white', width: '100%' }}>
-        <div> Let's Get Started </div>
-
-        <div className='d-flex column'>
-
-          <div className='d-flex-row'>
-            <form className='d-flex flex-column' onSubmit={this.firstNameSubmit}>
-              <div> First Name</div>
-              <input type='text' className='border' value={firstName} onChange={this.firstNameInput}/>
-            </form>
-            <form className='d-flex flex-column' onSubmit={this.lastNameSubmit}>
-              <div> Last Name </div>
-              <input type='text' className='border' value={lastName} onChange={this.lastNameInput} />
-            </form>
+      <div style={{ height: '100%', backgroundColor: 'white', width: '100%' }}>
+        <div className='createAccountUpperText'> Let's Get Started </div>
+          <form className='d-flex flex-column' onSubmit={this.submitNewUserInformation}>
+            <div className='userCreateFirstLastNameContainer d-flex flex-row'>
+                <div className='userCreateFirstContainer d-flex flex-column'>
+                  <div> First Name</div>
+                  <input name='firstName' type='text' className='userCreateFirstInput border' value={firstName} onChange={this.infoInput} />
+                </div>
+                <div className='userCreateLastContainer d-flex flex-column'>
+                  <div> Last Name </div>
+                  <input name='lastName' type='text' className='userCreateLastInput border' value={lastName} onChange={this.infoInput} />
+                </div>
+                </div>
+                <div className='userCreateEmailContainer d-flex flex-column'>
+                  <div> Email </div>
+                  <input name='email' type='text' className='userCreateEmailInput border' value={email} onChange={this.infoInput} />
+                </div>
+                <div className='userCreatePasswordContainer d-flex flex-column'>
+                  <div> Password </div>
+                  <input name='password' type='text' className='userCreatePasswordInput border' value={password} onChange={this.infoInput} />
+                </div>
+                <div className='userCreateText1'> We will never share your data with a third party. </div>
+                <div className='userCreateSignUp'> SIGN UP </div>
+          </form>
+          <div className='userCreateBottomContainer'>
+            <div className='userCreateBotText'> Already have an account? </div>
+            <div
+              className='userCreateLogIn'
+              onClick={() => this.props.setView('login', {})}>
+              LOG IN
+            </div>
           </div>
-
-          <form className='d-flex flex-column' onSubmit={this.emailSubmit}>
-            <div> Email </div>
-            <input type='text' className='border' value={email} onChange={this.emailInput} />
-          </form>
-
-          <form className='d-flex flex-column' onSubmit={this.passwordSubmit}>
-            <div> Password </div>
-            <input type='text' className='border' value={password} onChange={this.passwordInput} />
-          </form>
-          <div> We will never share your data with a third party. </div>
-          <div> Sign Up </div>
-        </div>
       </div>
     );
   }
