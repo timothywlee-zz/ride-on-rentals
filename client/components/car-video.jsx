@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Details extends React.Component {
+class DetailVideo extends React.Component {
   constructor(props) {
     super(props);
     this.state = { car: null };
@@ -20,22 +20,23 @@ class Details extends React.Component {
       .catch(err => console.error(err));
   }
 
+  // src={car.video}
+
   render() {
     const { car } = this.state;
     return !car
       ? <div>Loading...</div>
       : <div className="container ">
         <div className="card p-2">
+
+          <div>
+            <iframe className="iframe-container"
+              src= "http://www.youtube.com/embed/Wo_6X25DXAQ?start=20&end=50&autoplay=1&loop=1" >
+            </iframe>
+          </div>
           <h1 className="jumbotron-fluid text-center bg-white font-weight-bold font-italic">
             {car.make}
           </h1>
-          <div className="opaque">
-            <img src={car.image} className="img-fluid"
-              style={{
-                objectFit: 'cover'
-                // height: '15em'
-              }} />
-          </div>
         </div>
         <div className="card-body see-thru">
           <div className="row flex-column flex-md-row align-items-center p-3 px-md-4 mb-3  border-bottom shadow-sm">
@@ -45,32 +46,33 @@ class Details extends React.Component {
             </h6>
           </div>
           <div className="card-text font-size-medium font-weight-bold font-italic">
+
             <h4>
               {car.shortDescription}
             </h4>
 
-            <div className="mt-3"></div>
+            <div className="mt-5"></div>
             <div className="card-text font-weight-bold font-italic">
-                        Top Speed: {car.topSpeed} mph
+                            Top Speed: {car.topSpeed} mph
             </div>
             <div className="card-text font-weight-bold font-italic">
-                        Horse Power: {car.horsePower} BHP
+                            Horse Power: {car.horsePower} BHP
             </div>
             <div className="card-text font-weight-bold font-italic">
-                        Rate: ${car.rate} / day
+                            Rate: ${car.rate} / day
             </div>
           </div>
         </div>
-        <div className="mt-2"></div>
+        <div className="mt-5"></div>
         <div className="d-flex flex-column align-items-center " >
           <div className="btn-group text-center" >
-            <button type="button" className="btn btn-sm btn-outline-secondary"><Link to="/home-page">Back</Link></button>
+            <button type="button" className="btn btn-sm btn-outline-secondary">Video</button>
             <button type="button" className="btn btn-sm btn-outline-secondary">Book Now</button>
-            <button type="button" className="btn btn-sm btn-outline-secondary"><Link to="/car-video">Video</Link></button>
+            <button type="button" className="btn btn-sm btn-outline-secondary"><Link to="/home-page">Back</Link></button>
           </div>
         </div>
       </div>;
   }
 }
 
-export default Details;
+export default DetailVideo;
