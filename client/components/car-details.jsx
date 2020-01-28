@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-  BrowserRouter as Link
-} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 class Details extends React.Component {
@@ -70,8 +67,8 @@ class Details extends React.Component {
             <button type="button" className="btn btn-sm btn-outline-secondary"><Link to="/home-page">Back</Link></button>
             <Link to="/reservations">
               <button type="button" className="btn btn-sm btn-outline-secondary">Book Now</button>
-            </Link>            
-            <button type="button" className="btn btn-sm btn-outline-secondary"><Link to="/car-video">Video</Link></button>   
+            </Link>
+            <button type="button" className="btn btn-sm btn-outline-secondary"><Link to="/car-video">Video</Link></button>
           </div>
         </div>
       </div>;
