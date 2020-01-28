@@ -27,8 +27,14 @@ class Header extends React.Component {
       <nav className="navbar fixed-top justify-content-center text-light header">
         <i
           onClick={this.goBack}
-          className={`back-btn fas fa-chevron-left pl-3 ${displayBackButton}`}></i>
+          className={`back-btn fas fa-chevron-left pl-3 ${displayBackButton}`}>
+        </i>
         <div className="title">{this.props.title}</div>
+       <i
+         className={`account-btn fas fa-user pr-3 ${displayUserButton}`}
+              style = {{ cursor: 'pointer' }}
+              onClick={this.drawerToggleClickHandler}>
+            </i>
         {drawerClicked
           ? (
             <div>
@@ -39,11 +45,7 @@ class Header extends React.Component {
             </div>
           )
           : (
-            <i
-              className={`account-btn fas fa-user pr-3 ${displayUserButton}`}
-              style = {{ cursor: 'pointer' }}
-              onClick={this.drawerToggleClickHandler}>
-            </i>
+            <div className='d-none'></div>
           )
         }
       </nav>

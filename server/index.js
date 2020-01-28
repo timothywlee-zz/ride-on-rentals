@@ -179,7 +179,7 @@ app.post('/api/users', (req, res, next) => {
       const sql = format(`
           insert into %I (%I)
           values (%L)
-        returning "userId";`, 'users', dbColumns, accountDetails
+        returning *;`, 'users', dbColumns, accountDetails
       );
       return (
         db.query(sql)
