@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './header';
 
 class UserAccount extends React.Component {
   constructor(props) {
@@ -30,10 +31,11 @@ class UserAccount extends React.Component {
     const { firstName, lastName } = this.state;
     return (
       <div
-        style={{ height: '94%' }}
-        className="container">
+        style={{ height: '100%' }}
+        className="container px-0">
+        <Header title="Your Account"/>
         <div
-          style={{ height: '100%' }}
+          style={{ height: '90%' }}
           className="d-flex flex-column justify-content-between align-items-center py-4">
           <div className="d-flex flex-column justify-content-between align-items-center py-2">
             <h5>Welcome back {firstName}!</h5>

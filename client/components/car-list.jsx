@@ -8,6 +8,7 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 import CarListItem from './car-list-item';
+import Header from './header';
 
 class SearchFilter extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class SearchFilter extends React.Component {
     return (
       <div
         style={{ background: '#aaa69d' }}
-        className="container py-2">
+        className="container-fluid py-2">
         <div className="d-flex align-items-center">
           <div className="mr-1">View</div>
           <select
@@ -117,16 +118,17 @@ export default class CarList extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <SearchFilter filterCars={this.filterCars}/>
+      <div className="bg-list">
+        <Header title="All Cars" history={this.props.history} back={true} user={true}/>
         <div
-          className="container-fluid px-0 carlist-bg"
-          style={{ height: '88vh', overflow: 'auto' }}>
-          <div className="container flex-column px-2">
+          className="container-fluid px-0"
+          style={{ overflow: 'auto', paddingTop: '45px' }}>
+          <SearchFilter filterCars={this.filterCars}/>
+          <div className="container">
             {this.displayCars()}
           </div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

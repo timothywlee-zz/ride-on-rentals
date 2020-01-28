@@ -14,7 +14,7 @@ body{
   height: 100vh;
 }
 
-.bg-img {
+.home-bg-img {
   height: 100%;
   background-position: bottom;
   background-size: cover;
@@ -45,8 +45,14 @@ body{
   font-size: 1.25em;
 }
 
-.nav-btn {
+.account-btn {
   right: 0;
+  font-size: 1.25em;
+  position: absolute;
+}
+
+.back-btn {
+  left: 0;
   font-size: 1.25em;
   position: absolute;
 }
