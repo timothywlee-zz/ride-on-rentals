@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import {
-  Link
-} from 'react-router-dom';
+import UserLogIn from './user-login';
+import CreateAccount from './create-user-account';
+import UserLoginSignUpPage from './user-login-signup-page';
 
 class NavMenu extends React.Component {
 
@@ -9,80 +10,57 @@ class NavMenu extends React.Component {
     super(props);
     this.state = {
       userLoggedIn: false, // hard code this for now.
-      logInClicked: false,
-      signUpClicked: false
+      view: {
+        name: 'default',
+        params: {}
+      }
     };
-    this.logInClickHandler = this.logInClickHandler.bind(this);
-    this.signUpClickHandler = this.signUpClickHandler.bind(this);
+    this.setView = this.setView.bind(this);
+    this.displayPage = this.displayPage.bind(this);
   }
 
-  logInClickHandler() {
-    event.preventDefault();
-    this.setState(prevState => { return { logInClicked: !prevState.logInClicked }; });
+  setView(name, params) {
+    this.setState({ view: { name, params } });
   }
 
-  signUpClickHandler() {
-    event.preventDefault();
-    this.setState(prevState => { return { signUpClicked: !prevState.signUpClicked }; });
+  displayPage() {
+    const { view } = this.state;
+    if (view.name === 'default') {
+      return (
+        <UserLoginSignUpPage
+          drawerOpen={this.props.drawerOpen}
+          show={this.props.show}
+          setView={this.setView} />);
+    } else if (view.name === 'login') {
+      return (
+        <UserLogIn
+          setView={this.setView} />
+      );
+    } else if (view.name === 'signup') {
+      return (
+        <CreateAccount
+          setView={this.setView} />
+      );
+    }
   }
 
   render() {
-    // const { userLoggedIn, logInClicked, signUpClicked } = this.state;
     const { userLoggedIn } = this.state;
+    const displayContent = this.displayPage();
     return (
       <nav
-        className={this.props.show ? 'side-drawer open' : 'side-drawer'}>
-        {userLoggedIn
-          ? <UserIsLoggedIn drawerOpen={this.props.drawerOpen} show={this.props.show} />
-          : <UserLoginSignUpPage drawerOpen={this.props.drawerOpen} show={this.props.show} logInClickHandler={this.logInClickHandler} signUpClickHandler={this.signUpClickHandler} />
-        }
+        className={`side-drawer ${this.props.show ? 'side-drawer-open' : null}`}>
+        <div
+          className='exitNavLogin far fa-arrow-alt-circle-right'
+          onClick={this.props.drawerOpen}
+          style={{ color: 'black', fontSize: '5vh' }} />
+        <div
+          className='displayContentInNavMenu'
+          style={{ height: '100%' }}> {displayContent}
+        </div>
       </nav>
     );
   }
 }
 
-function UserLoginSignUpPage(props) {
-  return (
-    <>
-      <div
-        className='exitNavLogin far fa-arrow-alt-circle-right'
-        onClick={props.drawerOpen}
-        style={{ color: 'black', fontSize: '5vh' }} />
-      <div className='NavBarContainer container'>
-        <div className='NavBarUpperText'> Sign in to have access to pricing or book a rental. </div>
-        <div className='NavBarMiddleText'> First time? Sign up, and book your Super Car experience today. </div>
-      </div>
-      <div className='NavBarButtonContainer'>
-        <Link to='/userlogin' className='logIn my-3'>
-          <div
-            onClick={props.logInClickHandler}>
-            LOG IN
-          </div>
-        </Link>
-        <Link to='/createaccount' className='signUp'>
-          <div
-            onClick={props.signUpClickHandler}>
-            SIGN UP
-          </div>
-        </Link>
-      </div>
-      <div className='NavBarLowerText my-2'> We will never share your data with a third party </div>
-    </>
-  );
-}
-// add function when user is logged in here
-function UserIsLoggedIn(props) {
-  return (
-    <div>
-      <div
-        className='exitNavLogin far fa-arrow-alt-circle-right'
-        onClick={props.drawerOpen}
-        style={{ color: 'black', fontSize: '5vh' }} />
-      <div className='d-flex flex-column justify-content-center align-items-center'>
-        <div style={{ color: 'black' }}> User is logged in </div>
-        <div style={{ color: 'black' }}> Insert links here to other pages </div>
-      </div>
-    </div>
-  );
-}
 export default NavMenu;
