@@ -60,6 +60,7 @@ class UserAccount extends React.Component {
           {this.verifyUser()}
           <button
             style={{ width: '250px' }}
+            onClick={() => this.props.history.push('/user/updateaccount')}
             className="btn btn-outline-dark mb-3">
               UPDATE ACCOUNT INFO
           </button>
