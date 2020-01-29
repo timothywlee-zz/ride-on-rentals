@@ -42,7 +42,7 @@ body{
 
 .header {
   background: #0f0f0f;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .bg-filter {

@@ -26,18 +26,16 @@ class Header extends React.Component {
 
   sideBar() {
     const { drawerClicked } = this.state;
-    return drawerClicked
-      ? (
-        <React.Fragment>
-          <NavMenu
-            history={this.props.history}
-            login={this.props.login}
-            drawerOpen={this.drawerToggleClickHandler}
-            show={drawerClicked} />
-          <div className='backdrop' />
-        </React.Fragment>
-      )
-      : <div className='d-none'/>;
+    return (
+      <React.Fragment>
+        {drawerClicked ? <div className='backdrop' /> : <div className='d-none' />}
+        <NavMenu
+          history={this.props.history}
+          login={this.props.login}
+          drawerOpen={this.drawerToggleClickHandler}
+          show={drawerClicked} />
+      </React.Fragment>
+    );
   }
 
   render() {
