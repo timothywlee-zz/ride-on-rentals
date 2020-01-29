@@ -178,17 +178,15 @@ app.post('/api/users', (req, res, next) => {
       const accountDetails = [firstName, lastName, email, hash];
       const sql = format(`
           insert into %I (%I)
-          values (%L)
-        returning *;`, 'users', dbColumns, accountDetails
+          values (%L)`, 'users', dbColumns, accountDetails
       );
       return (
         db.query(sql)
-          .then(result => {
-            const user = result.rows[0];
-            res.json(user);
-          }));
-    })
-    .catch(err => next(err));
+          .then(result => res.status(201).json({
+            message: 'Account created successfully.'
+          }))
+      );
+    }).catch(err => next(err));
 });
 
 app.get('/api/auth', (req, res, next) => {
