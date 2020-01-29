@@ -72,11 +72,8 @@ class CreateAccount extends React.Component {
       },
       body: JSON.stringify({ firstName, lastName, email, password })
     })
-      .then(res => res.json())
-      .then(result => {
-        if (result.headers === 201) {
-          this.props.setView('login');
-        }
+      .then(() => {
+        this.props.setView('login');
       })
       .catch(err => console.error(err));
   }
