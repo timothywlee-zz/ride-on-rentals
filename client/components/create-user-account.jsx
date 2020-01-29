@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-useless-escape */
-/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 
 class CreateAccount extends React.Component {
@@ -41,7 +40,6 @@ class CreateAccount extends React.Component {
     const firstNameIsValid = firstName.length >= 2 && firstName.length <= 32;
     const lastNameIsValid = lastName.length >= 2 && lastName.length <= 32;
     const validateEmailRegex = RegExp(/^([a-z\d\.\-\_]{1,64})@([a-z\d\-]{1,227})\.([a-z]{2,28})$/);
-    // const validatePasswordRegex = RegExp(//);
 
     if (event.target.name === 'firstName') {
       if (!firstNameIsValid) {
@@ -67,7 +65,6 @@ class CreateAccount extends React.Component {
   createUserAccount() {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
-
     fetch('/api/users', {
       method: 'POST',
       headers: {
@@ -75,8 +72,9 @@ class CreateAccount extends React.Component {
       },
       body: JSON.stringify({ firstName, lastName, email, password })
     })
-      .then(response => response.json())
-      .then(data => console.log('data: ', data))
+      .then(() => {
+        this.props.setView('login');
+      })
       .catch(err => console.error(err));
   }
 
@@ -90,7 +88,7 @@ class CreateAccount extends React.Component {
     const checkPasswordInput = !validPassword || validPassword === null ? red : green;
 
     return (
-      <div style={{ height: '100%', backgroundColor: 'white', width: '100%' }}>
+      <div style={{ height: '100%', width: '100%' }}>
         <div className='createAccountUpperText'> Let&apos;s Get Started </div>
         <form className='d-flex flex-column form-group' onSubmit={this.createUserAccount}>
           <div className='userCreateFirstLastNameContainer d-flex flex-row'>
