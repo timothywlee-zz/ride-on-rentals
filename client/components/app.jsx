@@ -12,6 +12,7 @@ import Reservation from './reservation';
 import PastRentals from './past-rentals';
 import UserAccount from './user-account';
 import CreateAccount from './create-user-account';
+import DetailVideo from './car-video';
 
 export default class App extends React.Component {
   render() {
@@ -29,6 +30,7 @@ export default class App extends React.Component {
             <Route exact path="/user/rentals" component={PastRentals}/>
             <Route exact path="/reservations" component={Reservation} />
             <Route exact path="/createaccount" component={CreateAccount} />
+            <Route exact path="/car-video/:id" component={DetailVideo}/>
           </Switch>
         </Router>
       </div>

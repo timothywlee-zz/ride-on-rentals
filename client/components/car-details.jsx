@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Details extends React.Component {
+class Details1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = { car: null };
@@ -75,4 +75,4 @@ class Details extends React.Component {
   }
 }
 
-export default Details;
+export default Details1;
