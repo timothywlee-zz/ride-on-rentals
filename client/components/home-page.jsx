@@ -1,11 +1,4 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom';
 import HomePageCarousel from './main-carousel';
 import Header from './header';
 
@@ -27,9 +20,9 @@ class Home extends React.Component {
               </p>
             </div>
             <div className="carousel"> <HomePageCarousel/> </div>
-            <Link to="/cars">
-              <button id="view-cars">VIEW CARS</button>
-            </Link>
+            <button
+              onClick={() => this.props.history.push('/cars')}
+              id="view-cars">VIEW CARS</button>
           </div>
         </div>
       </div>
