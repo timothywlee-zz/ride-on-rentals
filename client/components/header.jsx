@@ -30,29 +30,16 @@ class Header extends React.Component {
           className={`back-btn fas fa-chevron-left pl-3 ${displayBackButton}`}>
         </i>
         <div className="title">{this.props.title}</div>
-       <i
-         className={`account-btn fas fa-user pr-3 ${displayUserButton}`}
-              style = {{ cursor: 'pointer' }}
-              onClick={this.drawerToggleClickHandler}>
-            </i>
-        {drawerClicked
-          ? (
-            <div>
-              <NavMenu
-                drawerOpen={this.drawerToggleClickHandler}
-                show={drawerClicked} />
-              <Backdrop />
-            </div>
-          )
-          : (
-            <div className='d-none'></div>
-          )
-        }
+        <i
+          className={`account-btn fas fa-user pr-3 ${displayUserButton}`}
+          style = {{ cursor: 'pointer' }}
+          onClick={this.drawerToggleClickHandler}>
+        </i>
+        {drawerClicked ? <div className='backdrop' /> : <div className='d-none' />}
+        {<NavMenu drawerOpen={this.drawerToggleClickHandler} show={drawerClicked} />}
       </nav>
     );
   }
 }
-
-const Backdrop = () => <div className='backdrop' />;
 
 export default Header;
