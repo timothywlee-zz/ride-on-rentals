@@ -10,40 +10,43 @@ class UpdateAccount extends React.Component {
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
+      updateButtonClicked: false
     };
     this.infoInput = this.infoInput.bind(this);
     this.updateSubmitHandler = this.updateSubmitHandler.bind(this);
+    this.toggleUpdateButton = this.toggleUpdateButton.bind(this);
   }
 
   componentDidMount() {
-    const { userId, firstName, lastName, email, password } = this.context.user;
-    this.setState({ userId, firstName, lastName, email, password });
+    const { userId, firstName, lastName, email } = this.context.user;
+    this.setState({ userId, firstName, lastName, email });
   }
 
   infoInput() {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  toggleUpdateButton() {
+    this.setState(prevState => { return { updateButtonClicked: !prevState.updateButtonClicked }; });
+  }
+
   updateSubmitHandler() {
-    console.log('this.state.userId: ', this.state.userId);
-    const { userId, firstName, lastName, email, password } = this.state;
+    event.preventDefault();
+    const { userId, firstName, lastName, email } = this.state;
     fetch(`/api/users/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ firstName, lastName, email, password })
+      body: JSON.stringify({ firstName, lastName, email })
     })
       .then(res => res.json())
-      .then(user => {
-        this.props.history.push(`/user?userId=${userId}`);
-      })
+      .then(user => this.toggleUpdateButton())
       .catch(err => console.error(err));
   }
 
   render() {
-    const { firstName, lastName, email, password } = this.state;
+    const { firstName, lastName, email, updateButtonClicked } = this.state;
     return (
       <div className='container'>
         <Header title='Update Account' history={this.props.history} back={true}/>
@@ -83,15 +86,6 @@ class UpdateAccount extends React.Component {
                 value={email}
                 onChange={this.infoInput} />
             </label>
-            <label className='text-muted'>
-              Password
-              <input
-                className='border my-1'
-                style={{ width: '100%', borderRadius: '4px' }}
-                name='password' type='text'
-                value={password}
-                onChange={this.infoInput} />
-            </label>
           </form>
           <div
             className='d-flex justify-content-center align-items-center mx-3'
@@ -101,7 +95,7 @@ class UpdateAccount extends React.Component {
               onClick={this.updateSubmitHandler}
               value='submit'
               style={{ width: '250px' }}>
-              UPDATE
+              {updateButtonClicked ? 'INFORMATION UPDATED' : 'UPDATE'}
             </button>
           </div>
         </div>

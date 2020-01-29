@@ -23,18 +23,28 @@ export default class App extends React.Component {
       user: null,
       isAuthorizing: true
     };
+    this.getUserInfo = this.getUserInfo.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
+    this.getUserInfo();
+  }
+
+  getUserInfo() {
     fetch('/api/auth')
       .then(res => res.json())
-      .then(result => this.setState({
-        user: result.user,
-        isAuthorizing: false
-      }))
+      .then(result =>
+        this.setState({
+          user: result.user,
+          isAuthorizing: false
+        }))
       .catch(err => console.error(err));
+  }
+
+  componentDidUpdate() {
+    this.getUserInfo();
   }
 
   login(user) {
