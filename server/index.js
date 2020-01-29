@@ -198,6 +198,7 @@ app.get('/api/auth', (req, res, next) => {
            "u"."firstName",
            "u"."lastName",
            "u"."email",
+           "u"."password",
            "u"."verified"
       from "users" as "u"
      where "userId" = $1
@@ -253,10 +254,9 @@ app.post('/api/auth', (req, res, next) => {
     .catch(err => next(err));
 });
 
-
 app.put('/api/users/:userId', (req, res, next) => {
-  const { firstName, lastName, email, password} = req.body;
-  console.log(firstName,lastName,email)
+  const { firstName, lastName, email, password } = req.body;
+  console.log(firstName, lastName, email, password);
   const { userId } = req.session;
   const userIdIsValid = typeof parseInt(userId) === 'number' && userId > 0;
 
