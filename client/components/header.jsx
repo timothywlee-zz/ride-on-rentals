@@ -8,17 +8,13 @@ class Header extends React.Component {
     this.state = {
       drawerClicked: false
     };
-    this.drawerToggleClickHandler = this.drawerToggleClickHandler.bind(this);
+    this.sideBar = this.sideBar.bind(this);
     this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
-    this.goBack = this.goBack.bind(this);
+    this.drawerToggleClickHandler = this.drawerToggleClickHandler.bind(this);
   }
 
   drawerToggleClickHandler() {
     this.setState(prevState => { return { drawerClicked: !prevState.drawerClicked }; });
-  }
-
-  goBack() {
-    this.props.history.goBack();
   }
 
   isUserAuthenticated() {
@@ -28,41 +24,44 @@ class Header extends React.Component {
     return this.props.history.push('/user');
   }
 
-  render() {
+  sideBar() {
     const { drawerClicked } = this.state;
+    return drawerClicked
+      ? (
+        <React.Fragment>
+          <NavMenu
+            history={this.props.history}
+            login={this.props.login}
+            drawerOpen={this.drawerToggleClickHandler}
+            show={drawerClicked} />
+          <div className='backdrop' />
+        </React.Fragment>
+      )
+      : <div className='d-none'/>;
+  }
+
+  render() {
     const displayBackButton = this.props.back ? '' : 'd-none';
     const displayUserButton = this.props.user ? '' : 'd-none';
     return (
       <nav className="navbar fixed-top justify-content-center text-light header">
         <i
-          onClick={this.goBack}
+          onClick={() => this.props.history.goBack()}
           className={`back-btn fas fa-chevron-left pl-3 ${displayBackButton}`}>
         </i>
-        <div className="title">{this.props.title}</div>
+        <div className="title">
+          {this.props.title}
+        </div>
         <i
-          className={`account-btn fas fa-user pr-3 ${displayUserButton}`}
           style = {{ cursor: 'pointer' }}
-          onClick={this.isUserAuthenticated}>
+          onClick={this.isUserAuthenticated}
+          className={`account-btn fas fa-user pr-3 ${displayUserButton}`}>
         </i>
-        {drawerClicked
-          ? (
-            <div>
-              <NavMenu
-                drawerOpen={this.drawerToggleClickHandler}
-                show={drawerClicked} />
-              <Backdrop />
-            </div>
-          )
-          : (
-            <div className='d-none'></div>
-          )
-        }
+        {this.sideBar()}
       </nav>
     );
   }
 }
-
-const Backdrop = () => <div className='backdrop' />;
 
 Header.contextType = AppContext;
 

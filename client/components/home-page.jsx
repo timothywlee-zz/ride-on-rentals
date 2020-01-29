@@ -15,7 +15,7 @@ class Home extends React.Component {
     return (
       <div className="home-bg-img">
         <div className="bg-filter">
-          <Header title="Super Car Experience" history={this.props.history} user={true}/>
+          <Header title="Super Car Experience" history={this.props.history} user={true} login={this.props.login}/>
           <div className="container-vertical pt-5">
             <div
               className="home-title">

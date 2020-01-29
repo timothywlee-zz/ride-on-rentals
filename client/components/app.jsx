@@ -21,6 +21,7 @@ export default class App extends React.Component {
       user: null,
       isAuthorizing: true
     };
+    this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -32,6 +33,10 @@ export default class App extends React.Component {
         isAuthorizing: false
       }))
       .catch(err => console.error(err));
+  }
+
+  login(user) {
+    this.setState({ user });
   }
 
   logout(user) {
@@ -47,7 +52,10 @@ export default class App extends React.Component {
         <AppContext.Provider value={this.state}>
           <Router>
             <Switch>
-              <Route exact path="/" component={Home}/>
+              <Route
+                exact path="/"
+                render={props => <Home {...props} login={this.login} />}
+              />
               <Route exact path="/cars" component={CarList}/>
               <Route
                 exact path="/user"

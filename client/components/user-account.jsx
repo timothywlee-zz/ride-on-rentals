@@ -15,6 +15,9 @@ class UserAccount extends React.Component {
   }
 
   componentDidMount() {
+    if (!this.context.user) {
+      return this.props.history.push('/');
+    }
     const { firstName, lastName, email, verified } = this.context.user;
     this.setState({ firstName, lastName, email, verified });
   }
