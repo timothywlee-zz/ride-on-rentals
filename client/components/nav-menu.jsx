@@ -52,8 +52,7 @@ class NavMenu extends React.Component {
           onClick={this.props.drawerOpen}
           style={{ color: 'black', fontSize: '5vh' }} />
         <div
-          className='displayContentInNavMenu'
-          style={{ height: '100%' }}>
+          className='displayContentInNavMenu'>
           {this.displayPage()}
         </div>
       </nav>
