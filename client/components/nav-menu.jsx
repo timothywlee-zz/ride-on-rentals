@@ -46,7 +46,7 @@ class NavMenu extends React.Component {
   render() {
     return (
       <nav
-        className={`side-drawer bg-account ${this.props.show ? 'side-drawer-open' : null}`}>
+        className={`${this.props.show ? 'side-drawer' : 'side-drawer hidden'}`}>
         <div
           className='exitNavLogin far fa-arrow-alt-circle-right'
           onClick={this.props.drawerOpen}

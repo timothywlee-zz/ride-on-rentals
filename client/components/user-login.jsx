@@ -46,7 +46,7 @@ class UserLogIn extends React.Component {
             </label>
             <label>
               Password
-              <input name='password' type='text' className='userLogInPassword border' value={password} onChange={this.infoInput}/>
+              <input name='password' type='password' className='userLogInPassword border' value={password} onChange={this.infoInput}/>
             </label>
             <button className='userLogInLogIn mt-2' value='submit'> LOG IN </button>
           </form>
