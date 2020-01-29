@@ -255,7 +255,8 @@ app.post('/api/auth', (req, res, next) => {
 
 
 app.put('/api/users/:userId', (req, res, next) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password} = req.body;
+  console.log(firstName,lastName,email)
   const { userId } = req.session;
   const userIdIsValid = typeof parseInt(userId) === 'number' && userId > 0;
 

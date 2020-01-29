@@ -14,6 +14,7 @@ import PastRentals from './past-rentals';
 import UserAccount from './user-account';
 import CreateAccount from './create-user-account';
 import DetailVideo from './car-video';
+import UpdateAccount from './update-account';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -57,17 +58,21 @@ export default class App extends React.Component {
                 exact path="/"
                 render={props => <Home {...props} login={this.login} />}
               />
-              <Route exact path="/cars" component={CarList}/>
               <Route
                 exact path="/user"
                 render={props => <UserAccount {...props} logout={this.logout}/>}
               />
-              <Route exact path="/cars/:id" component={Details}/>
+              <Route
+                exact path="/user/updateaccount"
+                render={props => <UpdateAccount {...props} />}
+              />
+              <Route exact path="/cars" component={CarList} />
+              <Route exact path="/cars/:id" component={Details} />
               <Route exact path="/userlogin" component={UserLogIn} />
               <Route exact path="/user/rentals" component={PastRentals}/>
               <Route exact path="/reservations" component={Reservation} />
               <Route exact path="/createaccount" component={CreateAccount} />
-              <Route exact path="/car-video/:id" component={DetailVideo}/>
+              <Route exact path="/car-video/:id" component={DetailVideo} />
             </Switch>
           </Router>
         </AppContext.Provider>

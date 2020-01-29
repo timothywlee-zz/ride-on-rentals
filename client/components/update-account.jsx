@@ -1,39 +1,60 @@
 import React from 'react';
-// import Header from './header';
+import Header from './header';
+import AppContext from '../lib/context';
 
 class UpdateAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: 'Tim',
-      lastName: 'Davis',
-      email: 'timdavis@lfz.com'
+      userId: '',
+      firstName: '',
+      lastName: '',
+      email: ''
     };
     this.infoInput = this.infoInput.bind(this);
+    this.updateSubmitHandler = this.updateSubmitHandler.bind(this);
+  }
+
+  componentDidMount(){
+    const { userId, firstName, lastName, email} = this.context.user;
+    this.setState({ userId, firstName, lastName, email})
   }
 
   infoInput() {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  emptySubmitHandler() {
-    <></>;
+  updateSubmitHandler() {
+    console.log('this.state.userId: ',this.state.userId)
+    const { userId, firstName, lastName, email } = this.state;
+   fetch(`/api/users/${userId}`, {
+     method: 'PUT',
+     headers: {
+       'Content-Type': 'application/json'
+     },
+     body: JSON.stringify({ userId, firstName, lastName, email })
+   })
+    .then(res => console.log('res: ',res))
+    .then(data => {
+      console.log('data: ', data)
+    })
+    .catch(err => console.error(err))
   }
 
   render() {
-    const { firstName, lastName, email } = this.state;
+    const { firstName, lastName, email, password } = this.state;
     return (
       <div className='container'>
-        {/* <Header title='Update Account'/> */}
+        <Header title='Update Account' history={this.props.history} back={true}/>
         <div
           className='d-flex flex-column justify-content-center align-items-center'
-          style={{ height: '27vh' }}>
+          style={{ height: '275px', paddingTop:'40px' }}>
           <h4>{firstName} {lastName}</h4>
           <i className="fas fa-user fa-7x mt-2"></i>
         </div>
         <div className='updateAccountContainer'>
 
-          <form className='d-flex flex-column px-3 justify-content-center' onSubmit={this.emptySubmitHandler}>
+          <form className='d-flex flex-column px-3 justify-content-center' onSubmit={this.updateSubmitHandler}>
             <label className='text-muted'>
               First Name
               <input
@@ -66,8 +87,9 @@ class UpdateAccount extends React.Component {
             className='d-flex justify-content-center align-items-center mx-3'
             style={{ height: '30vh' }}>
             <button
-              className=''
-              style={{ width: '80%', height: '5vh', background: 'transparent', border: '1px solid black', backgroundColor: 'red', color: 'white' }}>
+              className='btn btn-danger'
+              onClick={this.updateSubmitHandler}
+              style={{ width: '250px'}}>
               UPDATE
             </button>
           </div>
@@ -77,4 +99,5 @@ class UpdateAccount extends React.Component {
   }
 }
 
+UpdateAccount.contextType = AppContext;
 export default UpdateAccount;
