@@ -43,9 +43,9 @@ export default class App extends React.Component {
       .catch(err => console.error(err));
   }
 
-  componentDidUpdate() {
-    this.getUserInfo();
-  }
+  // componentDidUpdate() {
+  //   this.getUserInfo();
+  // }
 
   login(user) {
     this.setState({ user });
@@ -59,8 +59,7 @@ export default class App extends React.Component {
     if (this.state.isAuthorizing) return null;
     return (
       <div
-        className="d-flex flex-column"
-        style={{ height: '100vh' }}>
+        className="mainPage d-flex flex-column">
         <AppContext.Provider value={this.state}>
           <Router>
             <Switch>

@@ -95,27 +95,27 @@ class CreateAccount extends React.Component {
     const checkPasswordInput = !validPassword || validPassword === null ? red : green;
 
     return (
-      <div style={{ height: '100%', width: '100%' }}>
+      <div>
         <div className='createAccountUpperText'> Let&apos;s Get Started </div>
         <form
           className='d-flex flex-column form-group mb-2'
           onSubmit={this.createUserAccount}>
-          <div className='userCreateFirstLastNameContainer d-flex flex-row'>
-            <label className='userCreateFirstContainer d-flex flex-column'>
+          <div className='firstLastContainer d-flex flex-row'>
+            <label className='d-flex flex-column mr-1'>
               First Name
               <input
                 name='firstName'
                 type='text'
-                className={`form-control ${checkFirstNameInput} border rounded mr-1`}
+                className={`form-control ${checkFirstNameInput} border rounded`}
                 value={firstName}
-                onChange={this.infoInput} />
+                onChange={this.infoInput}/>
             </label>
-            <label className='userCreateLastContainer d-flex flex-column'>
+            <label className='d-flex flex-column'>
               Last Name
               <input
                 name='lastName'
                 type='text'
-                className={`form-control ${checkLastNameInput} border rounded ml-1`}
+                className={`form-control ${checkLastNameInput} border rounded`}
                 value={lastName}
                 onChange={this.infoInput} />
             </label>
