@@ -51,25 +51,34 @@ class UserAccount extends React.Component {
       <div
         style={{ paddingTop: '45px', height: '100vh' }}
         className="container px-0 bg-account">
-        <Header title="Your Account" history={this.props.history} back={true}/>
+        <Header
+          back={true}
+          title="Your Account"
+          history={this.props.history}
+        />
         <div
           style={{ height: '100%' }}
           className="d-flex flex-column align-items-center">
-          <h4 className="my-5">Welcome back {firstName}!</h4>
+          <h4 className="my-5">
+            Welcome back {firstName}!
+          </h4>
           <i className="fas fa-user fa-7x mb-3"/>
-          <h4 className="mb-4">{firstName} {lastName}</h4>
+          <h4 className="mb-4">
+            {firstName} {lastName}
+          </h4>
           {this.verifyUser()}
-          <Link to={'/user/update'}
+          <Link
+            to={'/user/update'}
             style={{ width: '250px' }}
             className="btn btn-outline-dark mb-3">
               UPDATE ACCOUNT INFO
           </Link>
-          <button
+          <Link
+            to={'/user/rentals'}
             style={{ width: '250px' }}
-            onClick={() => this.props.history.push('/user/rentals')}
             className="btn btn-outline-dark mb-3">
               VIEW PAST RENTALS
-          </button>
+          </Link>
           <button
             style={{ width: '250px' }}
             onClick={this.logout}

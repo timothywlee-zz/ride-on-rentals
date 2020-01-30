@@ -134,7 +134,7 @@ class CreateAccount extends React.Component {
             Password
             <input
               name='password'
-              type='text'
+              type='password'
               className={`form-control ${checkPasswordInput} border rounded mb-1`}
               value={password}
               onChange={this.infoInput} />
