@@ -37,6 +37,14 @@ class CarDetails extends React.Component {
       </div>;
   }
 
+  reservationErrorMessage() {
+    const { user } = this.context;
+    const { availability } = this.state.car;
+    if (user && !availability) return <p className='card-text'>This car is Unavailable</p>;
+    if ((!user && !availability) || (!user && availability)) return <p className='card-text'>Please login to make a reservation</p>;
+    if (user && availability) return <p className="d-none"></p>;
+  }
+
   render() {
     const { car } = this.state;
     return !car
@@ -102,9 +110,13 @@ class CarDetails extends React.Component {
                       ? { pointerEvents: 'none' }
                       : {}
                   }
-                  className={`btn ${this.context.user ? 'btn-outline-dark' : 'btn-outline-danger'}`}>
+                  className='btn btn-outline-dark'>
                   <Link
-                    style={{ color: 'inherit' }}
+                    style={
+                      !car.availability
+                        ? { pointerEvents: 'none', color: 'inherit' }
+                        : { color: 'inherit' }
+                    }
                     to={`/cars/reservations/${car.carId}`}>
                     Book Now
                   </Link>
@@ -116,7 +128,7 @@ class CarDetails extends React.Component {
                   {this.state.video ? 'Image' : 'Video'}
                 </button>
               </div>
-              <p className={this.context.user ? 'd-none' : 'card-text'}>Please login to make a reservation</p>
+              {this.reservationErrorMessage()}
             </div>
           </div>
         </div>
