@@ -77,17 +77,17 @@ class CarDetails extends React.Component {
             </div>
             <div
               className="mt-2"
-              style={{ fontSize: '1.15rem' }}>
+              style={{ fontSize: '1.2rem' }}>
               <div className="d-flex row">
                 <div className="col-6 px-0">
-                  <p className="card-text">Top Speed:</p>
-                  <p className="card-text">Horse Power:</p>
-                  <p className="card-text">Rate:</p>
+                  <p className="card-text mb-1">Top Speed:</p>
+                  <p className="card-text mb-1">Horse Power:</p>
+                  <p className="card-text mb-1">Rate:</p>
                 </div>
                 <div className="col-6 text-right px-0">
-                  <p className="card-text">{car.topSpeed} mph</p>
-                  <p className="card-text">{car.horsePower} BHP</p>
-                  <p className="card-text">${car.rate} / day</p>
+                  <p className="card-text mb-1">{car.topSpeed} mph</p>
+                  <p className="card-text mb-1">{car.horsePower} BHP</p>
+                  <p className="card-text mb-1">${car.rate} / day</p>
                 </div>
               </div>
             </div>
@@ -111,6 +111,7 @@ class CarDetails extends React.Component {
                       : {}
                   }
                   className='btn btn-outline-dark'>
+
                   <Link
                     style={
                       !car.availability

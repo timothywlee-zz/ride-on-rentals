@@ -55,9 +55,7 @@ body{
 }
 
 .card-filter {
-  backdrop-filter: blur(4px);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.719) 5%, rgba(238, 243, 243, 0.384));
-  /* overflow: hidden; */
 }
 
 .filter-dropdown {
@@ -444,4 +442,20 @@ label {
 .modalTotal {
   margin-right: 0;
   margin-bottom: 0;
+}
+
+.react-datepicker__input-container {
+  height: 2em!important;
+  width: 10em!important;
+}
+
+.react-datepicker__input-container > input{
+  height: inherit;
+  width: inherit;
+  border: none;
+  font-size: 16px;
+  background: white;
+  border-radius: .2rem;
+  padding-left: .5rem;
+  box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.192);
 }
