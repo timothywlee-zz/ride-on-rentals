@@ -1,6 +1,12 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
+} from 'reactstrap';
 
 class CreateAccount extends React.Component {
   constructor(props) {
@@ -69,8 +75,7 @@ class CreateAccount extends React.Component {
     }
   }
 
-  createUserAccount() {
-    event.preventDefault();
+  createUserAccount(event) {
     const { firstName, lastName, email, password } = this.state;
     fetch('/api/users', {
       method: 'POST',

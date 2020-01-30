@@ -55,7 +55,7 @@ class UpdateAccount extends React.Component {
         </div>
         <div className='updateAccountContainer'>
 
-          <form className='d-flex flex-column px-3 justify-content-center' onSubmit={this.updateSubmitHandler}>
+          <form className='d-flex flex-column justify-content-center px-4' onSubmit={this.updateSubmitHandler}>
             <label className='text-muted'>
               First Name
               <input

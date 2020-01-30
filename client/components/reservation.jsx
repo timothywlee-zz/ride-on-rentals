@@ -3,7 +3,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
@@ -227,8 +226,11 @@ export default class Reservation extends React.Component {
               </ModalBody>
               <ModalFooter className='d-flex align-items-center' style={{ borderTop: 'none' }}>
                 <h4 className='modalTotal mr-1'>Total: ${rate} </h4>
-                <Link to={'/'}>
-                  <Button color='danger' onClick={this.submitReservationInformation}> CONFIRM </Button>
+                <Link
+                  to={'/'}
+                  className='btn btn-danger'
+                  onClick={this.submitReservationInformation}>
+                   CONFIRM
                 </Link>
               </ModalFooter>
             </Modal>
