@@ -9,12 +9,10 @@ class UpdateAccount extends React.Component {
       userId: '',
       firstName: '',
       lastName: '',
-      email: '',
-      updateButtonClicked: false
+      email: ''
     };
     this.infoInput = this.infoInput.bind(this);
     this.updateSubmitHandler = this.updateSubmitHandler.bind(this);
-    this.toggleUpdateButton = this.toggleUpdateButton.bind(this);
   }
 
   componentDidMount() {
@@ -24,10 +22,6 @@ class UpdateAccount extends React.Component {
 
   infoInput() {
     this.setState({ [event.target.name]: event.target.value });
-  }
-
-  toggleUpdateButton() {
-    this.setState(prevState => { return { updateButtonClicked: !prevState.updateButtonClicked }; });
   }
 
   updateSubmitHandler() {
@@ -41,15 +35,18 @@ class UpdateAccount extends React.Component {
       body: JSON.stringify({ firstName, lastName, email })
     })
       .then(res => res.json())
-      .then(user => this.toggleUpdateButton())
+      .then(user => {
+        this.context.login(user);
+        return this.props.history.push('/user');
+      })
       .catch(err => console.error(err));
   }
 
   render() {
     const { firstName, lastName, email, updateButtonClicked } = this.state;
     return (
-      <div className='container'>
-        <Header title='Update Account' history={this.props.history} back={true}/>
+      <div className='container bg-account'>
+        <Header title='Update Account' linkTo={'/user'} back={true}/>
         <div
           className='d-flex flex-column justify-content-center align-items-center'
           style={{ height: '275px', paddingTop: '40px' }}>
