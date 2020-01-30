@@ -139,28 +139,25 @@ export default class Reservation extends React.Component {
           linkTo={`/cars/${carId}`}
         />
         <div className="row text-white bg-dark mt-5">
-          <h6
-            className="reservation-opener text-center col-12"
-            style={{ color: 'white' }}>
-            Book Your Reservation, {userId.firstName}!
-          </h6>
         </div>
-        <form className="date-form" onSubmit={this.submitreservationInformation}>
+        <form className="card" onSubmit={this.submitreservationInformation}>
           <div className="rectangle">
             <h4 className="vehicle-overview text-center ">Vehicle Overview</h4>
             <div className="vehicle">
-              <img src={car.image} className="img-fluid"
+              <img src={car.image} className="img-fluid card-top"
                 style={{
                   objectFit: 'cover'
                 }} />
             </div>
-            <h6 className="vehicle-name text-center" value={carId} onChange={this.reservationInput}>{car.make}</h6>
-            <h4 className="rates">Rates</h4>
-            <h6 className="rates-per-day">${car.rate}/day</h6>
-            <h6 className="estimated-days">Number of day(s):{daysLeft || 0} </h6>
-            <h6 className="estimated-rates" value={total} onChange={this.reservationInput}>Total: ${rate || 0}</h6>
+            <div className="card-container">
+              <h6 className="vehicle-name text-center" value={carId} onChange={this.reservationInput}>{car.make}</h6>
+              <div className="date-row"> Choose Your Date!</div>
+              <h4 className="rates">Rates</h4>
+              <h6 className="rates-per-day">${car.rate}/day</h6>
+              <h6 className="estimated-days">Number of day(s):{daysLeft || 0} </h6>
+              <h6 className="estimated-rates" value={total} onChange={this.reservationInput}>Total: ${rate || 0}</h6>
+            </div>
           </div>
-          <div className="date-row"> Choose Your Date!</div>
           <div className="date-pickers col">
             <div>
               <b>Start Date</b>:
@@ -177,7 +174,7 @@ export default class Reservation extends React.Component {
               <DatePicker
                 selected={this.state.endDate}
                 onChange={this.handleChangeEnd}
-                minDate={moment().toDate()}
+                minDate={this.state.startDate}
                 placeholderText="Select a day"
               />
             </div>
