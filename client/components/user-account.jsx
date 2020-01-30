@@ -10,17 +10,25 @@ class UserAccount extends React.Component {
       firstName: '',
       lastName: '',
       email: '',
-      verified: ''
+      verified: '',
+      photo: ''
     };
     this.logout = this.logout.bind(this);
+    this.onUploadSubmit = this.onUploadSubmit.bind(this);
+    this.onUploadChange = this.onUploadChange.bind(this);
+    this.verification = this.verification.bind(this);
   }
 
   componentDidMount() {
     if (!this.context.user) {
       return this.props.history.push('/');
     }
-    const { firstName, lastName, email, verified } = this.context.user;
-    this.setState({ firstName, lastName, email, verified });
+    this.verification();
+  }
+
+  verification() {
+    const { firstName, lastName, email, verified, photo } = this.context.user;
+    this.setState({ firstName, lastName, email, verified, photo });
   }
 
   verifyUser() {
@@ -29,16 +37,43 @@ class UserAccount extends React.Component {
       ? <h5 style={{ paddingBottom: '5em' }}>Verified <i style={{ color: 'green' }} className="fas fa-check"/></h5>
       : <React.Fragment>
         <h5>Add photo Id to get verified <i style={{ color: 'red' }} className="fas fa-times"/></h5>
-        <Link
-          to={'/user/uploadphoto'}
-          style={{ width: '250px' }}
-          className="btn btn-outline-dark my-3">
-            UPLOAD
-        </Link>
+        <form onSubmit={this.onUploadSubmit}>
+          <input
+            name='userPhoto'
+            type='file'
+            onChange={this.onUploadChange}
+            style={{ width: '250px' }}
+            className="btn btn-outline-dark my-3">
+          </input>
+          <button type='submit'> SUBMIT </button>
+        </form>
         <div className="pb-5" style={{ width: '70%', textAlign: 'center' }}>
           <p>Verification allows us to approve you for a rental more quickly.</p>
         </div>
       </React.Fragment>;
+  }
+
+  onUploadSubmit(event) {
+    event.preventDefault();
+
+    const uploadingPhoto = new FormData();
+    uploadingPhoto.append('userPhoto', this.state.photo);
+
+    fetch('/api/upload-image', {
+      method: 'PUT',
+      body: uploadingPhoto
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.context.login(data);
+        this.verification();
+      })
+      .catch(err => console.error(err));
+
+  }
+
+  onUploadChange(event) {
+    this.setState({ photo: event.target.files[0] });
   }
 
   logout() {
@@ -89,5 +124,4 @@ class UserAccount extends React.Component {
 }
 
 UserAccount.contextType = AppContext;
-
 export default UserAccount;

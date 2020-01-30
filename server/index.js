@@ -9,7 +9,6 @@ const sessionMiddleware = require('./session-middleware');
 const path = require('path');
 const multer = require('multer');
 const app = express();
-// const router = express.Router();
 
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
@@ -199,6 +198,7 @@ app.get('/api/auth', (req, res, next) => {
            "u"."firstName",
            "u"."lastName",
            "u"."email",
+           "u"."photo",
            "u"."verified"
       from "users" as "u"
      where "userId" = $1
@@ -287,7 +287,6 @@ app.delete('/api/auth', (req, res, next) => {
   return res.status(204).json({ user: null });
 });
 
-// image-upload
 const photoStorage = multer.diskStorage({
   destination: './server/public/images/uploads/',
   filename: function (req, file, cb) {
@@ -297,20 +296,33 @@ const photoStorage = multer.diskStorage({
 
 const upload = multer({ storage: photoStorage }).single('userPhoto');
 
-// image-upload endpoint
-app.post('/api/upload-image', (req, res, next) => {
-  upload(req, res, err => {
-    console.log('Request: ', req.body);
-    console.log('Request File: ', req.file);
-    if (!err) {
-      // res.json(`/images/uploads/${req.file.filename}`);
-      res.json(`/images/uploads/${req.file.filename}`);
+app.put('/api/upload-image', (req, res, next) => {
+  const { userId } = req.session;
+  const userIdIsValid = typeof parseInt(userId) === 'number' && userId > 0;
 
-      return true;
-    } else {
+  if (!userIdIsValid || !userId) {
+    throw next(new ClientError('Id must be a positive integer.', 400));
+  }
+
+  upload(req, res, err => {
+    const imagePath = `/images/uploads/${req.file.filename}`;
+    if (err) {
       next(err);
-      return false;
     }
+    const sql = format(
+        `update %I
+            set "photo" = %L,
+                "verified" = true
+          where "userId" = %L
+      returning *;`, 'users', imagePath, userId
+    );
+
+    db.query(sql)
+      .then(result => {
+        const user = result.rows[0];
+        res.json(user);
+      })
+      .catch(err => next(err));
   });
 });
 
