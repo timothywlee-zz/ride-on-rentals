@@ -6,6 +6,13 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import AppContext from '../lib/context';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
+} from 'reactstrap';
 
 export default class Reservation extends React.Component {
   constructor(props) {
@@ -16,12 +23,15 @@ export default class Reservation extends React.Component {
       total: '',
       startDate: new Date(),
       endDate: new Date(),
-      car: []
+      car: [],
+      modal: false,
+      fade: true
     };
     this.handleChangeEnd = this.handleChangeEnd.bind(this);
     this.handleChangeStart = this.handleChangeStart.bind(this);
     this.reservationInput = this.reservationInput.bind(this);
     this.submitReservationInformation = this.submitReservationInformation.bind(this);
+    this.toggleClickHandler = this.toggleClickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -107,8 +117,16 @@ export default class Reservation extends React.Component {
 
   // }
 
+  toggleClickHandler() {
+    this.setState({
+      modal: !this.state.modal,
+      fade: !this.state.fade
+    });
+  }
+
   render() {
-    const { userId, carId, total, startDate, endDate, car } = this.state;
+    const { userId, carId, total, startDate, endDate, car, modal, fade } = this.state;
+    const { firstName, lastName } = this.context.user;
     const daysLeft = this.calculateDaysLeft(startDate, endDate);
     const rate = daysLeft * car.rate;
     return !userId
@@ -159,7 +177,27 @@ export default class Reservation extends React.Component {
             <h6 className="estimated-rates" value={total} onChange={this.reservationInput}>Total: ${rate}</h6>
           </div>
           <div className="col-md-4 text-center fixed-bottom mb-5">
-            <div className="btn btn-secondary btn-sm" value="submit" onClick={this.submitReservationInformation}>Reserve Now</div>
+            <div className="btn btn-secondary btn-sm" value="submit" onClick={this.toggleClickHandler}>Reserve Now</div>
+            <Modal isOpen={modal} toggle={this.toggleClickHandler} fade={fade} centered>
+              <ModalHeader toggle={this.toggleClickHandler}> Confirm Your Reservation </ModalHeader>
+              <ModalBody>
+                <div className='infoContainer d-flex flex-row'>
+                  <div className='d-flex flex-column'>
+                    <h4>{firstName} {lastName}</h4>
+                    <h5>{car.make}</h5>
+                    <h6>Start Date: {startDate.toLocaleDateString()}</h6>
+                    <h6>End Date: {endDate.toLocaleDateString()} </h6>
+                  </div>
+                  <div className='d-flex'>
+                    <img style={{ height: '200px', width: '200px' }} src={car.image} />
+                  </div>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <h6>Total: ${rate} </h6>
+                <Button onClick={this.submitReservationInformation}> CONFIRM </Button>
+              </ModalFooter>
+            </Modal>
           </div>
         </form>
       </div>
