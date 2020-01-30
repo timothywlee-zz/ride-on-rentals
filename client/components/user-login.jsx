@@ -1,4 +1,5 @@
 import React from 'react';
+import AppContext from '../lib/context';
 
 class UserLogIn extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class UserLogIn extends React.Component {
     })
       .then(res => res.json())
       .then(user => {
-        this.props.login(user);
+        this.context.login(user);
         this.props.closeDrawer();
       })
       .catch(err => console.error(err));
@@ -63,5 +64,7 @@ class UserLogIn extends React.Component {
     );
   }
 }
+
+UserLogIn.contextType = AppContext;
 
 export default UserLogIn;
