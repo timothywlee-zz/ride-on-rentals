@@ -45,24 +45,24 @@ class CarDetails extends React.Component {
           className="card m-3 card-filter">
           <div className="card-body">
             <div
-              style={{ fontSize: '1.1rem' }}
+              style={{ fontSize: '1.15rem' }}
               className="my-3">
               <p className="card-title">{car.availability ? 'Available' : 'Unavailable'}</p>
               <p className="card-text">{car.shortDescription}</p>
             </div>
             <div
               className="mt-2"
-              style={{ fontSize: '1.15rem' }}>
+              style={{ fontSize: '1.2rem' }}>
               <div className="d-flex row">
                 <div className="col-6 px-0">
-                  <p className="card-text">Top Speed:</p>
-                  <p className="card-text">Horse Power:</p>
-                  <p className="card-text">Rate:</p>
+                  <p className="card-text mb-1">Top Speed:</p>
+                  <p className="card-text mb-1">Horse Power:</p>
+                  <p className="card-text mb-1">Rate:</p>
                 </div>
                 <div className="col-6 text-right px-0">
-                  <p className="card-text">{car.topSpeed} mph</p>
-                  <p className="card-text">{car.horsePower} BHP</p>
-                  <p className="card-text">${car.rate} / day</p>
+                  <p className="card-text mb-1">{car.topSpeed} mph</p>
+                  <p className="card-text mb-1">{car.horsePower} BHP</p>
+                  <p className="card-text mb-1">${car.rate} / day</p>
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@ class CarDetails extends React.Component {
                 className="btn-group text-center mb-2">
                 <button
                   type="button"
-                  className="btn btn-outline-secondary mr-1">
+                  className="btn btn-outline-dark mr-1">
                   <Link
                     to="/cars"
                     style={{ color: 'inherit' }}>
@@ -85,7 +85,7 @@ class CarDetails extends React.Component {
                       ? { pointerEvents: 'none' }
                       : {}
                   }
-                  className={`btn ${this.context.user ? 'btn-outline-secondary' : 'btn-outline-danger'}`}>
+                  className={`btn ${this.context.user ? 'btn-outline-dark' : 'btn-outline-danger'}`}>
                   <Link
                     style={{ color: 'inherit' }}
                     to={`/cars/reservations/${car.carId}`}>
@@ -94,7 +94,7 @@ class CarDetails extends React.Component {
                 </button>
                 <button
                   type="button"
-                  className="btn btn-outline-secondary ml-1">
+                  className="btn btn-outline-dark ml-1">
                   <Link
                     style={{ color: 'inherit' }}
                     to={`/cars/video/${car.carId}`} >

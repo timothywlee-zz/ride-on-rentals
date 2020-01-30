@@ -70,7 +70,7 @@ class UserAccount extends React.Component {
           <Link
             to={'/user/update'}
             style={{ width: '250px' }}
-            className="btn btn-outline-dark mb-3">
+            className="btn btn-outline-dark mb-3 mt-5">
               UPDATE ACCOUNT INFO
           </Link>
           <Link

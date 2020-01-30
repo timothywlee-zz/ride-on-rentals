@@ -1,11 +1,7 @@
 /* eslint-disable no-console */
 
 import React from 'react';
-import 'react-dates/initialize';
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import AppContext from '../lib/context';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Modal,
@@ -13,8 +9,12 @@ import {
   ModalBody,
   ModalFooter
 } from 'reactstrap';
+import moment from 'moment';
 import Header from './header';
-import { Link } from 'react-router-dom';
+import 'react-dates/initialize';
+import AppContext from '../lib/context';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default class Reservation extends React.Component {
   constructor(props) {
@@ -23,8 +23,8 @@ export default class Reservation extends React.Component {
       userId: '',
       carId: '',
       total: '',
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: '',
+      endDate: '',
       car: [],
       modal: false,
       fade: true
@@ -105,17 +105,6 @@ export default class Reservation extends React.Component {
     });
   }
 
-  // handleChangeTotal(total) {
-  //   this.setState(
-  //     {
-  //       total: rate
-  //     },
-  //     () => this.calculateTotal()
-  //   );
-  //   console.log('endDate: ', this.state.endDate);
-
-  // }
-
   toggleClickHandler() {
     this.setState({
       modal: !this.state.modal,
@@ -124,13 +113,16 @@ export default class Reservation extends React.Component {
   }
 
   render() {
-    const { userId, carId, total, startDate, endDate, car, modal, fade } = this.state;
+    const { userId, carId, startDate, endDate, car, modal, fade } = this.state;
     const { firstName, lastName } = this.context.user;
     const daysLeft = this.calculateDaysLeft(startDate, endDate);
+    const hasStartEndDate = startDate && endDate;
     const rate = daysLeft * car.rate;
     return !userId
       ? <div>Loading...</div>
-      : <div className="container bg-list">
+      : <div
+        style={{ paddingTop: '2.9em' }}
+        className="container bg-list px-0">
         <Header
           title={'Reservation'}
           back={true}
@@ -138,77 +130,97 @@ export default class Reservation extends React.Component {
           history={this.props.history}
           linkTo={`/cars/${carId}`}
         />
-        <div className="row text-white bg-dark mt-5">
-        </div>
-        <form className="card" onSubmit={this.submitreservationInformation}>
-          <div className="rectangle">
-            <h4 className="vehicle-overview text-center ">Vehicle Overview</h4>
-            <div className="vehicle">
-              <img src={car.image} className="img-fluid card-top"
-                style={{
-                  objectFit: 'cover'
-                }} />
+        <img
+          src={car.image}
+          className="img-fluid list-img"
+          style={{ objectFit: 'cover' }}
+        />
+        <form
+          className="card m-3 card-filter"
+          style={{ borderRadius: '.25em' }}
+          onSubmit={this.submitreservationInformation}>
+          <div className="card-body">
+            <h4 className="card-title mb-4">Reserve Car: <br/>{car.make}</h4>
+            <div className="row px-0 mb-4">
+              <div className="col-6 p-0">
+                <label style={{ fontSize: '1.2rem' }}>Start Date:</label>
+                <DatePicker
+                  popperPlacement='top'
+                  selected={this.state.startDate}
+                  onChange={this.handleChangeStart}
+                  minDate={moment().toDate()}
+                  placeholderText="Select a start date"
+                />
+              </div>
+              <div className="col-6 p-0">
+                <label style={{ fontSize: '1.2rem' }}>End Date:</label>
+                <DatePicker
+                  popperPlacement='top-left'
+                  selected={this.state.endDate}
+                  style={{ borderRadius: '4px' }}
+                  onChange={this.handleChangeEnd}
+                  minDate={this.state.startDate}
+                  placeholderText="Select an end date"
+                />
+              </div>
             </div>
-            <div className="card-container">
-              <h6 className="vehicle-name text-center" value={carId} onChange={this.reservationInput}>{car.make}</h6>
-              <div className="date-row"> Choose Your Date!</div>
-              <h4 className="rates">Rates</h4>
-              <h6 className="rates-per-day">${car.rate}/day</h6>
-              <h6 className="estimated-days">Number of day(s):{daysLeft || 0} </h6>
-              <h6 className="estimated-rates" value={total} onChange={this.reservationInput}>Total: ${rate || 0}</h6>
+            <div
+              className="mt-2"
+              style={{ fontSize: '1.2rem' }}>
+              <div className="d-flex row">
+                <div className="col-6 px-0">
+                  <p className="card-text mb-1">Rate:</p>
+                  <p className="card-text mb-1">Number of Days:</p>
+                  <p className="card-text mb-1">Total:</p>
+                </div>
+                <div className="col-6 text-right px-0">
+                  <p className="card-text mb-1">${car.rate}/day</p>
+                  <p className="card-text mb-1">{daysLeft || 0}</p>
+                  <p className="card-text mb-1">${rate || 0}</p>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="date-pickers col">
-            <div>
-              <b>Start Date</b>:
-              <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleChangeStart}
-                minDate={moment().toDate()}
-                placeholderText="Select a day"
-              />
+            <div className="d-flex flex-column align-items-center mt-2" >
+              <div
+                className="btn-group text-center mb-2">
+                <div
+                  value="submit"
+                  style={hasStartEndDate ? {} : { pointerEvents: 'none' }}
+                  className="btn btn-outline-dark"
+                  onClick={this.toggleClickHandler}>
+                  Reserve Now
+                </div>
+              </div>
+              <p className={hasStartEndDate ? 'd-none' : 'card-text text-center'}>
+                Please select a start and end date <br/> before making a reservation
+              </p>
             </div>
-            &nbsp;&nbsp;&nbsp;
-            <div>
-              <b>End Date</b>:
-              <DatePicker
-                selected={this.state.endDate}
-                onChange={this.handleChangeEnd}
-                minDate={this.state.startDate}
-                placeholderText="Select a day"
-              />
-            </div>
-          </div>
-
-          <div className="col-md-4 text-center fixed-bottom mb-5">
-            <div className="btn btn-secondary btn-sm" value="submit" onClick={this.toggleClickHandler}>Reserve Now</div>
             <Modal
               isOpen={modal}
               toggle={this.toggleClickHandler}
               fade={fade}
               centered>
               <ModalHeader toggle={this.toggleClickHandler}> Confirm Your Reservation </ModalHeader>
-              <ModalBody>
-                <div className='infoContainer d-flex flex-row'>
+              <ModalBody className="d-flex justify-content-center align-items-center">
+                <div className='infoContainer d-flex align-items-center'>
                   <div className='d-flex flex-column'>
                     <div
                       className='d-flex justify-content-center align-items-center'
                       style={{ height: '50px' }}>
-                      <h2
-                        className='modalCarMake'
-                        style={{ height: '40px' }}>{car.make}</h2>
+                      <h3
+                        className='modalCarMake text-center'
+                        style={{ height: '40px' }}>{car.make}</h3>
                     </div>
-                    <div className='d-flex flex-row'>
-                      <div className='d-flex flex-column justify-content-center'>
-                        <h5>{firstName} {lastName}</h5>
-                        <h6>Start Date: {startDate.toLocaleDateString()}</h6>
-                        <h6>End Date: {endDate.toLocaleDateString()} </h6>
-                      </div>
-                      <div className='shadow-sm rounded'>
-                        <img
-                          style={{ objectFit: 'contain', height: '175px', width: '200px' }}
-                          src={car.image} />
-                      </div>
+                    <div className='shadow-sm rounded'>
+                      <img
+                        className="img-fluid"
+                        style={{ objectFit: 'cover' }}
+                        src={car.image} />
+                    </div>
+                    <div className='d-flex flex-column justify-content-center text-center mt-4'>
+                      <h5>{firstName} {lastName}</h5>
+                      <h6>Start Date: {this.state.startDate ? startDate.toLocaleDateString() : 'Please Choose a Date'}</h6>
+                      <h6>End Date: {this.state.endDate ? endDate.toLocaleDateString() : 'Please Choose a Date'} </h6>
                     </div>
                   </div>
                 </div>
