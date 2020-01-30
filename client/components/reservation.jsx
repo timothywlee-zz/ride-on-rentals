@@ -6,6 +6,7 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import AppContext from '../lib/context';
+import Header from './header';
 
 export default class Reservation extends React.Component {
   constructor(props) {
@@ -14,8 +15,8 @@ export default class Reservation extends React.Component {
       userId: '',
       carId: '',
       total: '',
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: null,
+      endDate: null,
       car: []
     };
     this.handleChangeEnd = this.handleChangeEnd.bind(this);
@@ -26,14 +27,12 @@ export default class Reservation extends React.Component {
 
   componentDidMount() {
     const { userId } = this.context.user;
-    console.log('userId: ', this.context.user.userId);
     this.setState({ userId });
     this.getCarOverview();
   }
 
   getCarOverview() {
     const { id } = this.props.match.params;
-    console.log('carId: ', id);
     fetch(`/api/cars/${id}`)
       .then(res => res.json())
       .then(car => this.setState({ car, carId: car.carId }))
@@ -46,8 +45,8 @@ export default class Reservation extends React.Component {
 
   submitReservationInformation() {
     event.preventDefault();
-    const { carId, total, startDate, endDate } = this.state;
-    console.log(this.state);
+    const { carId, car, startDate, endDate } = this.state;
+    const total = this.calculateDaysLeft(startDate, endDate) * car.rate;
     fetch('/api/rentals', {
       method: 'POST',
       headers: {
@@ -67,7 +66,6 @@ export default class Reservation extends React.Component {
       },
       () => this.calculateDaysLeft()
     );
-    console.log('startDate: ', this.state.startDate);
   }
 
   handleChangeEnd(date) {
@@ -77,7 +75,6 @@ export default class Reservation extends React.Component {
       },
       () => this.calculateDaysLeft()
     );
-    console.log('endDate: ', this.state.endDate);
   }
 
   calculateDaysLeft(startDate, endDate) {
@@ -87,26 +84,6 @@ export default class Reservation extends React.Component {
     return endDate.diff(startDate, 'days');
   }
 
-  calculateTotal() {
-    const { startDate, endDate, car } = this.state;
-    const daysLeft = this.calculateDaysLeft(startDate, endDate);
-    const rate = daysLeft * car.rate;
-    this.setState({
-      total: rate
-    });
-  }
-
-  // handleChangeTotal(total) {
-  //   this.setState(
-  //     {
-  //       total: rate
-  //     },
-  //     () => this.calculateTotal()
-  //   );
-  //   console.log('endDate: ', this.state.endDate);
-
-  // }
-
   render() {
     const { userId, carId, total, startDate, endDate, car } = this.state;
     const daysLeft = this.calculateDaysLeft(startDate, endDate);
@@ -114,6 +91,13 @@ export default class Reservation extends React.Component {
     return !userId
       ? <div>Loading...</div>
       : <div className="container bg-list">
+        <Header
+          title={'Reservation'}
+          back={true}
+          user={true}
+          history={this.props.history}
+          linkTo={`/cars/${carId}`}
+        />
         <div className="row text-white bg-dark mt-5">
           <h6
             className="reservation-opener text-center col-12"
@@ -122,6 +106,20 @@ export default class Reservation extends React.Component {
           </h6>
         </div>
         <form className="date-form" onSubmit={this.submitreservationInformation}>
+          <div className="rectangle">
+            <h4 className="vehicle-overview text-center ">Vehicle Overview</h4>
+            <div className="vehicle">
+              <img src={car.image} className="img-fluid"
+                style={{
+                  objectFit: 'cover'
+                }} />
+            </div>
+            <h6 className="vehicle-name text-center" value={carId} onChange={this.reservationInput}>{car.make}</h6>
+            <h4 className="rates">Rates</h4>
+            <h6 className="rates-per-day">${car.rate}/day</h6>
+            <h6 className="estimated-days">Number of day(s):{daysLeft || 0} </h6>
+            <h6 className="estimated-rates" value={total} onChange={this.reservationInput}>Total: ${rate || 0}</h6>
+          </div>
           <div className="date-row"> Choose Your Date!</div>
           <div className="date-pickers col">
             <div>
@@ -144,20 +142,7 @@ export default class Reservation extends React.Component {
               />
             </div>
           </div>
-          <div className="rectangle">
-            <h4 className="vehicle-overview text-center ">Vehicle Overview</h4>
-            <div className="vehicle">
-              <img src={car.image} className="img-fluid"
-                style={{
-                  objectFit: 'cover'
-                }} />
-            </div>
-            <h6 className="vehicle-name text-center" value={carId} onChange={this.reservationInput}>{car.make}</h6>
-            <h4 className="rates">Rates</h4>
-            <h6 className="rates-per-day">${car.rate}/day</h6>
-            <h6 className="estimated-days">Number of day(s):{daysLeft}</h6>
-            <h6 className="estimated-rates" value={total} onChange={this.reservationInput}>Total: ${rate}</h6>
-          </div>
+
           <div className="col-md-4 text-center fixed-bottom mb-5">
             <div className="btn btn-secondary btn-sm" value="submit" onClick={this.submitReservationInformation}>Reserve Now</div>
           </div>
