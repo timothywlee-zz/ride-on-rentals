@@ -1,5 +1,6 @@
 import React from 'react';
 import NavMenu from './nav-menu';
+import { Link } from 'react-router-dom';
 import AppContext from '../lib/context';
 
 class Header extends React.Component {
@@ -43,10 +44,9 @@ class Header extends React.Component {
     const displayUserButton = this.props.user ? '' : 'd-none';
     return (
       <nav className="navbar fixed-top justify-content-center text-light header">
-        <i
-          onClick={() => this.props.history.goBack()}
-          className={`back-btn fas fa-chevron-left pl-3 ${displayBackButton}`}>
-        </i>
+        <Link to={this.props.linkTo || '/'}>
+          <i className={`back-btn fas fa-chevron-left pl-3 ${displayBackButton}`}/>
+        </Link>
         <div className="title">
           {this.props.title}
         </div>
@@ -62,4 +62,5 @@ class Header extends React.Component {
 }
 
 Header.contextType = AppContext;
+
 export default Header;

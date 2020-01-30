@@ -42,12 +42,18 @@ body{
 
 .header {
   background: #0f0f0f;
-  /* overflow: hidden; */
 }
 
 .bg-filter {
   height: 100%;
   backdrop-filter: blur(3px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.719) 5%, rgba(238, 243, 243, 0.384));
+  overflow: hidden;
+}
+
+.card-filter {
+  min-height: 25em;
+  backdrop-filter: blur(6px);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.719) 5%, rgba(238, 243, 243, 0.384));
   overflow: hidden;
 }
@@ -77,20 +83,23 @@ body{
 
 .account-btn {
   right: 0;
-  font-size: 1.25em;
+  font-size: 1.25rem;
   position: absolute;
 }
 
 .back-btn {
+  color: white;
   left: 0;
-  font-size: 1.25em;
+  vertical-align: middle;
+  line-height: 0;
+  font-size: 1.25rem;
   position: absolute;
 }
 
 .home-title {
   position: relative;
-  font-size: 2em;
-  letter-spacing: .3em;
+  font-size: 2rem;
+  letter-spacing: .3rem;
   padding: 1em 0;
 }
 
@@ -105,12 +114,12 @@ body{
 #view-cars {
   outline: 0;
   border: none;
-  font-size: 1.8em;
+  font-size: 1.8rem;
   padding-top: 4em;
   background: none;
   position: relative;
-  letter-spacing: .2em;
-  cursor: pointer;
+  letter-spacing: .2rem;
+  color: initial;
 }
 #view-cars::after{
   content: '';
