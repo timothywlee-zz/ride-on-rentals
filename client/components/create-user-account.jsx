@@ -128,7 +128,7 @@ class CreateAccount extends React.Component {
               className={`form-control ${checkEmailInput} border rounded`}
               value={email}
               onChange={this.infoInput} />
-            {!validEmail && email !== '' ? <div className='invalid-feedback mx-2' style={{ fontSize: '0.7rem', color: '#AC1E1E' }}> Email must be a valid address <br /> e.g. me@mydomain.com </div> : null }
+            {!validEmail && email !== '' ? <div className='mx-2' style={{ fontSize: '0.7rem', color: '#AC1E1E' }}> Email must be a valid address <br /> e.g. me@mydomain.com </div> : null }
           </label>
           <label className='userCreatePasswordContainer d-flex flex-column'>
             Password
@@ -138,7 +138,7 @@ class CreateAccount extends React.Component {
               className={`form-control ${checkPasswordInput} border rounded mb-1`}
               value={password}
               onChange={this.infoInput} />
-            {!validPassword && password !== '' ? <div className='mx-2' style={{ fontSize: '0.7rem', color: '#AC1E1E' }}> Password must contain at least 1 lowercase and 1 uppercase alphabetical character, <br /> 1 numeric character, <br /> 1 special character, <br /> and must be 8 characters long  </div> : null}
+            {!validPassword && password !== '' ? <div className='mx-2' style={{ fontSize: '0.7rem', color: '#AC1E1E' }}> Password must contain at least: <br/> 1 lowercase and 1 uppercase alphabetical character, <br /> 1 numeric character, <br /> 1 special character, <br /> and must be 8 characters long  </div> : null}
           </label>
           <div className='userCreateText1'> We will never share your data with a third party. </div>
           {validFirstName && validLastName && validEmail && validPassword ? <button className='userCreateSignUp border-success'> SIGN UP </button> : <div className='userCreateSignUp'> SIGN UP </div>}
