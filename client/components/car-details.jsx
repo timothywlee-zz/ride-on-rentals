@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from './header';
+import AppContext from '../lib/context';
 
-class Details1 extends React.Component {
+class CarDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = { car: null };
@@ -25,39 +26,83 @@ class Details1 extends React.Component {
     const { car } = this.state;
     return !car
       ? <div>Loading...</div>
-      : <div style={{ paddingTop: '3.8em' }} className="container bg-list">
+      : <div
+        style={{ paddingTop: '2.9em' }}
+        className="container bg-list px-0">
         <Header
-          history={this.props.history}
+          user={true}
+          back={true}
+          linkTo={'/cars'}
           title={this.state.car.make}
-          back={true} user={true}
-          linkTo={'/cars'}/>
-        <div className="card">
-          <img src={car.image} className="card-img-top"
-            style={{ objectFit: 'cover' }} />
-        </div>
-        <div className="card card-filter">
+          history={this.props.history}/>
+        <img
+          src={car.image}
+          className="img-fluid list-img"
+          style={{ objectFit: 'cover' }}
+        />
+        <div
+          style={{ borderRadius: '.25em' }}
+          className="card m-3 card-filter">
           <div className="card-body">
-            <div className="text-justify">
-              <p> {car.shortDescription} </p>
+            <div
+              style={{ fontSize: '1.1rem' }}
+              className="my-3">
+              <p className="card-title">{car.availability ? 'Available' : 'Unavailable'}</p>
+              <p className="card-text">{car.shortDescription}</p>
             </div>
-            <div className="card-text">
-              Top Speed: {car.topSpeed} mph
-            </div>
-            <div className="card-text">
-              Horse Power: {car.horsePower} BHP
-            </div>
-            <div className="card-text">
-              Rate: ${car.rate} / day
-            </div>
-            <div className="d-flex flex-column align-items-center mt-5" >
-              <div
-                className="btn-group text-center">
-                <button type="button" className="btn btn-outline-secondary"><Link to="/cars" style={{ color: 'inherit' }}>Back</Link></button>
-                <Link to={`/cars/reservations/${car.carId}`}>
-                  <button type="button" className="btn btn-outline-secondary">Book Now</button>
-                </Link>
-                <button type="button" className="btn btn-outline-secondary"><Link to={`/cars/video/${car.carId}`} style={{ color: 'inherit' }}>Video</Link></button>
+            <div
+              className="mt-2"
+              style={{ fontSize: '1.15rem' }}>
+              <div className="d-flex row">
+                <div className="col-6 px-0">
+                  <p className="card-text">Top Speed:</p>
+                  <p className="card-text">Horse Power:</p>
+                  <p className="card-text">Rate:</p>
+                </div>
+                <div className="col-6 text-right px-0">
+                  <p className="card-text">{car.topSpeed} mph</p>
+                  <p className="card-text">{car.horsePower} BHP</p>
+                  <p className="card-text">${car.rate} / day</p>
+                </div>
               </div>
+            </div>
+            <div className="d-flex flex-column align-items-center mt-2" >
+              <div
+                className="btn-group text-center mb-2">
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary mr-1">
+                  <Link
+                    to="/cars"
+                    style={{ color: 'inherit' }}>
+                    Back
+                  </Link>
+                </button>
+                <button
+                  type="button"
+                  style={
+                    !this.context.user
+                      ? { pointerEvents: 'none' }
+                      : {}
+                  }
+                  className={`btn ${this.context.user ? 'btn-outline-secondary' : 'btn-outline-danger'}`}>
+                  <Link
+                    style={{ color: 'inherit' }}
+                    to={`/cars/reservations/${car.carId}`}>
+                    Book Now
+                  </Link>
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary ml-1">
+                  <Link
+                    style={{ color: 'inherit' }}
+                    to={`/cars/video/${car.carId}`} >
+                    Video
+                  </Link>
+                </button>
+              </div>
+              <p className={this.context.user ? 'd-none' : 'card-text'}>Please login to make a reservation</p>
             </div>
           </div>
         </div>
@@ -65,4 +110,6 @@ class Details1 extends React.Component {
   }
 }
 
-export default Details1;
+CarDetails.contextType = AppContext;
+
+export default CarDetails;
