@@ -178,24 +178,41 @@ export default class Reservation extends React.Component {
           </div>
           <div className="col-md-4 text-center fixed-bottom mb-5">
             <div className="btn btn-secondary btn-sm" value="submit" onClick={this.toggleClickHandler}>Reserve Now</div>
-            <Modal isOpen={modal} toggle={this.toggleClickHandler} fade={fade} centered>
+            <Modal
+              isOpen={modal}
+              toggle={this.toggleClickHandler}
+              fade={fade}
+              centered>
               <ModalHeader toggle={this.toggleClickHandler}> Confirm Your Reservation </ModalHeader>
               <ModalBody>
                 <div className='infoContainer d-flex flex-row'>
                   <div className='d-flex flex-column'>
-                    <h4>{firstName} {lastName}</h4>
-                    <h5>{car.make}</h5>
-                    <h6>Start Date: {startDate.toLocaleDateString()}</h6>
-                    <h6>End Date: {endDate.toLocaleDateString()} </h6>
-                  </div>
-                  <div className='d-flex'>
-                    <img style={{ height: '200px', width: '200px' }} src={car.image} />
+                    <div
+                      className='d-flex justify-content-center align-items-center border'
+                      style={{ height: '50px' }}>
+                      <h2
+                        className='modalCarMake border'
+                        style={{ height: '40px' }}>{car.make}</h2>
+                    </div>
+                    <div className='d-flex flex-row'>
+                      <div className='d-flex flex-column justify-content-center'>
+                        <h5 className='border'>{firstName} {lastName}</h5>
+                        <h6 className='border'>Start Date: {startDate.toLocaleDateString()}</h6>
+                        <h6 className='border'>End Date: {endDate.toLocaleDateString()} </h6>
+                      </div>
+                      <div >
+                        <img
+                          className='shadow-md'
+                          style={{ objectFit: 'contain', height: '200px', width: '200px' }}
+                          src={car.image} />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </ModalBody>
-              <ModalFooter>
-                <h6>Total: ${rate} </h6>
-                <Button onClick={this.submitReservationInformation}> CONFIRM </Button>
+              <ModalFooter className='d-flex align-items-center'>
+                <h3 className='modalTotal border mr-1'>Total: ${rate} </h3>
+                <Button color='danger' onClick={this.submitReservationInformation}> CONFIRM </Button>
               </ModalFooter>
             </Modal>
           </div>

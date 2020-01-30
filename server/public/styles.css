@@ -442,3 +442,12 @@ body{
 label {
   margin-bottom: 0;
 }
+
+.modalCarMake {
+  margin-bottom: 0;
+}
+
+.modalTotal {
+  margin-right: 0;
+  margin-bottom: 0;
+}
