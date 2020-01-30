@@ -14,6 +14,7 @@ import {
   ModalFooter
 } from 'reactstrap';
 import Header from './header';
+import { Link } from 'react-router-dom';
 
 export default class Reservation extends React.Component {
   constructor(props) {
@@ -66,7 +67,7 @@ export default class Reservation extends React.Component {
       body: JSON.stringify({ carId, total, startDate, endDate })
     })
       .then(response => response.json())
-      .then(data => { console.log('data: ', data); })
+      .then(data => this.toggleClickHandler())
       .catch(err => console.error(err));
   }
 
@@ -194,31 +195,32 @@ export default class Reservation extends React.Component {
                 <div className='infoContainer d-flex flex-row'>
                   <div className='d-flex flex-column'>
                     <div
-                      className='d-flex justify-content-center align-items-center border'
+                      className='d-flex justify-content-center align-items-center'
                       style={{ height: '50px' }}>
                       <h2
-                        className='modalCarMake border'
+                        className='modalCarMake'
                         style={{ height: '40px' }}>{car.make}</h2>
                     </div>
                     <div className='d-flex flex-row'>
                       <div className='d-flex flex-column justify-content-center'>
-                        <h5 className='border'>{firstName} {lastName}</h5>
-                        <h6 className='border'>Start Date: {startDate.toLocaleDateString()}</h6>
-                        <h6 className='border'>End Date: {endDate.toLocaleDateString()} </h6>
+                        <h5>{firstName} {lastName}</h5>
+                        <h6>Start Date: {startDate.toLocaleDateString()}</h6>
+                        <h6>End Date: {endDate.toLocaleDateString()} </h6>
                       </div>
-                      <div >
+                      <div className='shadow-sm rounded'>
                         <img
-                          className='shadow-md'
-                          style={{ objectFit: 'contain', height: '200px', width: '200px' }}
+                          style={{ objectFit: 'contain', height: '175px', width: '200px' }}
                           src={car.image} />
                       </div>
                     </div>
                   </div>
                 </div>
               </ModalBody>
-              <ModalFooter className='d-flex align-items-center'>
-                <h3 className='modalTotal border mr-1'>Total: ${rate} </h3>
-                <Button color='danger' onClick={this.submitReservationInformation}> CONFIRM </Button>
+              <ModalFooter className='d-flex align-items-center' style={{ borderTop: 'none' }}>
+                <h4 className='modalTotal mr-1'>Total: ${rate} </h4>
+                <Link to={'/'}>
+                  <Button color='danger' onClick={this.submitReservationInformation}> CONFIRM </Button>
+                </Link>
               </ModalFooter>
             </Modal>
           </div>
