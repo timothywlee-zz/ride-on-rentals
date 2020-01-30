@@ -49,10 +49,10 @@ class UserLogIn extends React.Component {
               Password
               <input name='password' type='password' className='userLogInPassword border' value={password} onChange={this.infoInput}/>
             </label>
-            <button className='userLogInLogIn mt-2' value='submit'> LOG IN </button>
+            <button className='userLogInLogIn mt-4' value='submit'> LOG IN </button>
           </form>
         </div>
-        <div className='userLogInBottomContainer'>
+        <div className='userLogInBottomContainer mt-2'>
           <div className='userLogInBotText'> Don&apos;t have an account? </div>
           <button
             className='userLogInSignUp'

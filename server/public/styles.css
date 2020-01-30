@@ -16,6 +16,9 @@ body{
   height: 100vh;
 }
 
+.mainPage{
+  height: 100%;
+}
 .home-bg-img {
   height: 100%;
   background-position: bottom;
@@ -139,25 +142,6 @@ body{
   opacity:1.0;
 }
 
-.mainCarouselItem {
-  height: 32vh;
-}
-
-.mainCarouselImage{
-  object-fit: cover;
-  width: 100%;
-  height: 32vh;
-}
-
-.mainCarouselIndicator{
-  height: 1vh;
-  width: 30%;
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  bottom: -5%;
-  left: 35%;
-}
 .row {
   margin-right: -1px;
   margin-left: -1px;
@@ -178,15 +162,19 @@ body{
   width: 100%;
   height: 100%;
 }
+
+
 .side-drawer{
   z-index: 5;
-  height: 100vh;
-  background-color: white;
+  height: 100%;
   position: fixed;
   top: 0;
   right: 0;
   width: 320px;
   transition: transform 0.2s ease-in-out;
+  background-image: url("images/menu-bg-2.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .side-drawer.hidden{
@@ -206,11 +194,11 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5vh;
-  height: 25vh;
+  padding: 2rem;
+  height: 13rem;
   width: 100%;
   color: black;
-  font-size: 2.5vh;
+  font-size: 1.3rem;
   text-align: center;
 }
 
@@ -218,7 +206,8 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 2vh;
+  padding: 0 1rem;
+  font-size: 1rem;
   width: 100%;
   color: black;
   text-align: center;
@@ -230,7 +219,7 @@ body{
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 0 6vh;
+  padding: 0 2rem;
 }
 
 
@@ -296,43 +285,25 @@ body{
   border-radius: .1em;
 }
 .createAccountUpperText{
-  height: 20vh;
+  height: 9rem;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3.7vh;
+  font-size: 1.7rem;
 }
 
-.userCreateFirstLastNameContainer{
-  height: 7vh;
+.firstLastContainer{
+  height: 4rem;
   width: 100%;
-  padding: 0 2.5vh;
-}
-
-.userCreateFirstContainer {
-  height: 7vh;
-}
-
-.userCreateLastContainer {
-  height: 7vh;
-}
-
-.userCreateFirstInput {
-  width: 95%;
-  border-radius: 4px;
-}
-
-
-.userCreateLastInput {
-  width: 100%;
-  border-radius: 4px;
+  padding: 0 1.4rem;
 }
 
 .userCreateEmailContainer {
-  margin: 0.5vh 0;
-  padding: 0 2.5vh;
+  margin: 5px 0 0 0;
+  padding: 0 1.4rem;
   width: 100%;
+  height: 4rem;
 }
 
 .userCreateEmailInput {
@@ -340,8 +311,8 @@ body{
 }
 
 .userCreatePasswordContainer {
-  margin: 0.5vh 0;
-  padding: 0 2.5vh;
+  margin: 2px 0;
+  padding: 0 1.4rem;
   width: 100%;
 }
 
@@ -402,9 +373,9 @@ body{
 }
 
 .welcomeBackText {
-  height: 20vh;
+  height: 9rem;
   width: 100%;
-  font-size: 4vh;
+  font-size: 1.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -412,55 +383,63 @@ body{
 
 .userLogInEmailPassword {
   width: 100%;
-  padding: 0 2.5vh;
+  padding: 0 1rem;
+  height: 12rem;
 }
 
 .userLogInEmail {
   border-radius: 4px;
   width: 100%;
+  height: 35px;
 }
 
 .userLogInPassword {
-  width: 100%;
   border-radius: 4px;
+  width: 100%;
+  height: 35px;
 }
 
 .userLogInLogIn {
   width: 100%;
   border: 2px solid black;
-  height: 6vh;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2vh;
+  font-size: 16px;
   background-color: transparent;
 }
 
 .userLogInBottomContainer {
   display: flex;
   flex-direction: row;
-  width: 86%;
-  height: 5.5vh;
-  margin: 1.5vh 2.5vh;
+  height: 3rem;
+  padding: 0 1rem;
 }
+
 .userLogInBotText{
-  font-size: 1.6vh;
+  font-size: 13px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 56%;
-  margin-right: 2.3vh;
+  width: 60%;
 }
+
 .userLogInSignUp {
   border: 2px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 40%;
-  font-size: 2vh;
+  font-size: 16px;
   background-color: transparent;
 }
 
-.form-control {
+.form-control{
   padding: 0;
+  height: 35px;
+}
+
+label {
+  margin-bottom: 0;
 }
