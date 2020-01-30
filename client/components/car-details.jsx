@@ -6,7 +6,7 @@ import AppContext from '../lib/context';
 class CarDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { car: null };
+    this.state = { car: null, video: false };
     this.getDetails = this.getDetails.bind(this);
   }
 
@@ -22,6 +22,21 @@ class CarDetails extends React.Component {
       .catch(err => console.error(err));
   }
 
+  viewVideo() {
+    const { video, car } = this.state;
+    return !video
+      ? <img
+        src={car.image}
+        className="img-fluid list-img"
+        style={{ objectFit: 'cover' }}
+      />
+      : <div className="iframe-container controls" >
+        <iframe
+          src={car.video}>
+        </iframe>
+      </div>;
+  }
+
   render() {
     const { car } = this.state;
     return !car
@@ -35,19 +50,21 @@ class CarDetails extends React.Component {
           linkTo={'/cars'}
           title={this.state.car.make}
           history={this.props.history}/>
-        <img
-          src={car.image}
-          className="img-fluid list-img"
-          style={{ objectFit: 'cover' }}
-        />
+        <div
+          className="d-flex flex-column justify-content-center"
+          style={{ minHeight: '17em', background: 'black' }}>
+          {this.viewVideo()}
+        </div>
         <div
           style={{ borderRadius: '.25em' }}
           className="card m-3 card-filter">
           <div className="card-body">
             <div
               style={{ fontSize: '1.1rem' }}
-              className="my-3">
-              <p className="card-title">{car.availability ? 'Available' : 'Unavailable'}</p>
+              className="my-2">
+              <p
+                style={{ fontSize: '1.25rem' }}
+                className="card-title">{car.availability ? 'Available' : 'Unavailable'}</p>
               <p className="card-text">{car.shortDescription}</p>
             </div>
             <div
@@ -71,7 +88,7 @@ class CarDetails extends React.Component {
                 className="btn-group text-center mb-2">
                 <button
                   type="button"
-                  className="btn btn-outline-secondary mr-1">
+                  className="btn btn-outline-dark mr-1">
                   <Link
                     to="/cars"
                     style={{ color: 'inherit' }}>
@@ -85,7 +102,7 @@ class CarDetails extends React.Component {
                       ? { pointerEvents: 'none' }
                       : {}
                   }
-                  className={`btn ${this.context.user ? 'btn-outline-secondary' : 'btn-outline-danger'}`}>
+                  className={`btn ${this.context.user ? 'btn-outline-dark' : 'btn-outline-danger'}`}>
                   <Link
                     style={{ color: 'inherit' }}
                     to={`/cars/reservations/${car.carId}`}>
@@ -94,12 +111,9 @@ class CarDetails extends React.Component {
                 </button>
                 <button
                   type="button"
-                  className="btn btn-outline-secondary ml-1">
-                  <Link
-                    style={{ color: 'inherit' }}
-                    to={`/cars/video/${car.carId}`} >
-                    Video
-                  </Link>
+                  onClick={() => this.setState({ video: !this.state.video })}
+                  className="btn btn-outline-dark ml-1">
+                  {this.state.video ? 'Image' : 'Video'}
                 </button>
               </div>
               <p className={this.context.user ? 'd-none' : 'card-text'}>Please login to make a reservation</p>
