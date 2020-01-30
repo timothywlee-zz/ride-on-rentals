@@ -29,7 +29,12 @@ class UserAccount extends React.Component {
       ? <h5 style={{ paddingBottom: '5em' }}>Verified <i style={{ color: 'green' }} className="fas fa-check"/></h5>
       : <React.Fragment>
         <h5>Add photo Id to get verified <i style={{ color: 'red' }} className="fas fa-times"/></h5>
-        <button style={{ width: '250px' }} className="btn btn-outline-dark my-3">UPLOAD</button>
+        <Link
+          to={'/user/uploadphoto'}
+          style={{ width: '250px' }}
+          className="btn btn-outline-dark my-3">
+            UPLOAD
+        </Link>
         <div className="pb-5" style={{ width: '70%', textAlign: 'center' }}>
           <p>Verification allows us to approve you for a rental more quickly.</p>
         </div>
@@ -59,7 +64,8 @@ class UserAccount extends React.Component {
           <i className="fas fa-user fa-7x mb-3"/>
           <h4 className="mb-4">{firstName} {lastName}</h4>
           {this.verifyUser()}
-          <Link to={'/user/update'}
+          <Link
+            to={'/user/update'}
             style={{ width: '250px' }}
             className="btn btn-outline-dark mb-3">
               UPDATE ACCOUNT INFO

@@ -1,14 +1,15 @@
 require('dotenv/config');
 const express = require('express');
-
 const db = require('./database');
 const bcrypt = require('bcrypt');
 const format = require('pg-format');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
-
+const path = require('path');
+const multer = require('multer');
 const app = express();
+// const router = express.Router();
 
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
@@ -265,7 +266,7 @@ app.put('/api/users/:userId', (req, res, next) => {
   }
 
   const sql = format(
-      `update %I
+    `update %I
           set "firstName" = %L,
               "lastName" = %L,
               "email" = %L
@@ -284,6 +285,33 @@ app.put('/api/users/:userId', (req, res, next) => {
 app.delete('/api/auth', (req, res, next) => {
   delete req.session.userId;
   return res.status(204).json({ user: null });
+});
+
+// image-upload
+const photoStorage = multer.diskStorage({
+  destination: './server/public/images/uploads/',
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: photoStorage }).single('userPhoto');
+
+// image-upload endpoint
+app.post('/api/upload-image', (req, res, next) => {
+  upload(req, res, err => {
+    console.log('Request: ', req.body);
+    console.log('Request File: ', req.file);
+    if (!err) {
+      // res.json(`/images/uploads/${req.file.filename}`);
+      res.json(`/images/uploads/${req.file.filename}`);
+
+      return true;
+    } else {
+      next(err);
+      return false;
+    }
+  });
 });
 
 app.use('/api', (req, res, next) => {

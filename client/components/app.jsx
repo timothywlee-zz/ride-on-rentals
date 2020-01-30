@@ -13,6 +13,7 @@ import Reservation from './reservation';
 import PastRentals from './past-rentals';
 import UserAccount from './user-account';
 import UpdateAccount from './update-account';
+import UploadPhoto from './upload-photo';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -71,6 +72,7 @@ export default class App extends React.Component {
               <Route exact path="/user" component={UserAccount} />
               <Route exact path="/user/update" component={UpdateAccount} />
               <Route exact path="/user/rentals" component={PastRentals}/>
+              <Route exact path="/user/uploadphoto" component={UploadPhoto} />
             </Switch>
           </Router>
         </AppContext.Provider>
