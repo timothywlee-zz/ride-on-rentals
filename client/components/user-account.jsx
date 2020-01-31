@@ -32,23 +32,26 @@ class UserAccount extends React.Component {
   }
 
   verifyUser() {
-    const { verified } = this.state;
+    const { verified, photo } = this.state;
     return verified
-      ? <h5 style={{ paddingBottom: '5em' }}>Verified <i style={{ color: 'green' }} className="fas fa-check"/></h5>
+      ? <h5 >Verified <i style={{ color: 'green' }} className="fas fa-check"/></h5>
       : <React.Fragment>
         <h5>Add photo Id to get verified <i style={{ color: 'red' }} className="fas fa-times"/></h5>
-        <form onSubmit={this.onUploadSubmit}>
+        <form onSubmit={this.onUploadSubmit} className='d-flex flex-column'>
           <input
             name='userPhoto'
             type='file'
             onChange={this.onUploadChange}
-            style={{ width: '250px' }}
-            className="btn btn-outline-dark my-3">
+            style={{ width: '250px', marginBottom: '5px' }}
+            className="btn btn-link border border-dark">
           </input>
-          <button type='submit'> SUBMIT </button>
+          <div className='d-flex justify-content-center' style={{ padding: '0 2.5rem' }}>
+            {!photo ? null : <button className='btn btn-danger' type='submit'> SUBMIT </button>}
+
+          </div>
         </form>
-        <div className="pb-5" style={{ width: '70%', textAlign: 'center' }}>
-          <p>Verification allows us to approve you for a rental more quickly.</p>
+        <div className=" d-flex justify-content-center " style={{ width: '70%', height: '100px', textAlign: 'center' }}>
+          <p className='d-flex align-items-center m-0'>Verification allows us to approve you for a rental more quickly.</p>
         </div>
       </React.Fragment>;
   }
@@ -85,6 +88,11 @@ class UserAccount extends React.Component {
       .catch(err => console.error(err));
   }
 
+  toggleUserPhoto() {
+    const { photo } = this.state;
+    return typeof photo === 'object' || !photo ? <i className="fas fa-user fa-7x mb-3" /> : <img className='userImage' src={`${photo}`} />;
+  }
+
   render() {
     const { firstName, lastName } = this.state;
     return (
@@ -99,10 +107,10 @@ class UserAccount extends React.Component {
         <div
           style={{ height: '100%' }}
           className="d-flex flex-column align-items-center">
-          <h4 className="my-5">
+          <h4 className="my-4">
             Welcome back {firstName}!
           </h4>
-          <i className="fas fa-user fa-7x mb-3"/>
+          {this.toggleUserPhoto()}
           <h4 className="mb-4">
             {firstName} {lastName}
           </h4>
@@ -110,7 +118,7 @@ class UserAccount extends React.Component {
           <Link
             to={'/user/update'}
             style={{ width: '250px' }}
-            className="btn btn-outline-dark mb-3 mt-5">
+            className="btn btn-outline-dark mb-3 mt-3">
               UPDATE ACCOUNT INFO
           </Link>
           <Link
