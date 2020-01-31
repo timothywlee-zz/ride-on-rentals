@@ -109,7 +109,7 @@ export default class Reservation extends React.Component {
       ? <div>Loading...</div>
       : <div
         style={{ paddingTop: '2.9em' }}
-        className="container bg-list px-0">
+        className="contain4er bg-list px-0">
         <Header
           title={'Reservation'}
           back={true}
@@ -218,7 +218,7 @@ export default class Reservation extends React.Component {
                   to={'/'}
                   className='btn btn-danger'
                   onClick={this.submitReservationInformation}>
-                   CONFIRM
+                    CONFIRM
                 </Link>
               </ModalFooter>
             </Modal>

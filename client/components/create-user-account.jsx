@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-escape */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 
 class CreateAccount extends React.Component {
@@ -15,11 +14,11 @@ class CreateAccount extends React.Component {
       validEmail: null,
       validPassword: null
     };
-    this.infoInput = this.infoInput.bind(this);
+    this.inputHandler = this.inputHandler.bind(this);
     this.createUserAccount = this.createUserAccount.bind(this);
   }
 
-  infoInput(event) {
+  inputHandler(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -70,6 +69,7 @@ class CreateAccount extends React.Component {
   }
 
   createUserAccount(event) {
+    event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
     fetch('/api/users', {
       method: 'POST',
@@ -107,7 +107,7 @@ class CreateAccount extends React.Component {
                 type='text'
                 className={`form-control ${checkFirstNameInput} border rounded`}
                 value={firstName}
-                onChange={this.infoInput}/>
+                onChange={this.inputHandler}/>
             </label>
             <label className='d-flex flex-column'>
               Last Name
@@ -116,7 +116,7 @@ class CreateAccount extends React.Component {
                 type='text'
                 className={`form-control ${checkLastNameInput} border rounded`}
                 value={lastName}
-                onChange={this.infoInput} />
+                onChange={this.inputHandler} />
             </label>
           </div>
           <label className='userCreateEmailContainer d-flex flex-column'>
@@ -126,7 +126,7 @@ class CreateAccount extends React.Component {
               type='text'
               className={`form-control ${checkEmailInput} border rounded`}
               value={email}
-              onChange={this.infoInput} />
+              onChange={this.inputHandler} />
             {!validEmail && email !== '' ? <div className='mx-2' style={{ fontSize: '0.7rem', color: '#AC1E1E' }}> Email must be a valid address <br /> e.g. me@mydomain.com </div> : null }
           </label>
           <label className='userCreatePasswordContainer d-flex flex-column'>
@@ -136,7 +136,7 @@ class CreateAccount extends React.Component {
               type='password'
               className={`form-control ${checkPasswordInput} border rounded mb-1`}
               value={password}
-              onChange={this.infoInput} />
+              onChange={this.inputHandler} />
             {!validPassword && password !== '' ? <div className='mx-2' style={{ fontSize: '0.7rem', color: '#AC1E1E' }}> Password must contain at least: <br/> 1 lowercase and 1 uppercase alphabetical character, <br /> 1 numeric character, <br /> 1 special character, <br /> and must be 8 characters long  </div> : null}
           </label>
           <div className='userCreateText1'> We will never share your data with a third party. </div>
