@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -27,13 +25,12 @@ export default class Reservation extends React.Component {
       car: [],
       modal: false,
       fade: true
-
     };
     this.handleChangeEnd = this.handleChangeEnd.bind(this);
-    this.handleChangeStart = this.handleChangeStart.bind(this);
     this.reservationInput = this.reservationInput.bind(this);
-    this.submitReservationInformation = this.submitReservationInformation.bind(this);
+    this.handleChangeStart = this.handleChangeStart.bind(this);
     this.toggleClickHandler = this.toggleClickHandler.bind(this);
+    this.submitReservationInformation = this.submitReservationInformation.bind(this);
   }
 
   componentDidMount() {
@@ -93,15 +90,6 @@ export default class Reservation extends React.Component {
     if (!moment.isMoment(endDate)) endDate = moment(endDate);
 
     return endDate.diff(startDate, 'days');
-  }
-
-  calculateTotal() {
-    const { startDate, endDate, car } = this.state;
-    const daysLeft = this.calculateDaysLeft(startDate, endDate);
-    const rate = daysLeft * car.rate;
-    this.setState({
-      total: rate
-    });
   }
 
   toggleClickHandler() {

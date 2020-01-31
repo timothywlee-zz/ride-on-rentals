@@ -55,8 +55,8 @@ class UpdateAccount extends React.Component {
         <Header title='Update Account' linkTo={'/user'} back={true}/>
         <div
           className='d-flex flex-column justify-content-center align-items-center'
-          style={{ height: '275px', paddingTop: '45px' }}>
-          <h4>{firstName} {lastName}</h4>
+          style={{ paddingTop: '45px' }}>
+          <h4 className="mt-3">{firstName} {lastName}</h4>
           {this.displayUserPhoto()}
         </div>
         <div className='updateAccountContainer'>
