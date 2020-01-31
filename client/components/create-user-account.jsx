@@ -1,12 +1,6 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from 'reactstrap';
 
 class CreateAccount extends React.Component {
   constructor(props) {
@@ -45,7 +39,7 @@ class CreateAccount extends React.Component {
     const { firstName, lastName, email, password } = this.state;
     const validateFirstName = RegExp(/^[a-zA-Z ,.'-]{2,32}$/);
     const validateLastName = RegExp(/^[a-zA-Z ,.'-]{2,32}$/);
-    const validateEmail = RegExp(/^([a-zA-Z\d\.\-\_]{1,64})@([a-z\d\-]{1,227})\.([a-z]{2,28})$/);
+    const validateEmail = RegExp(/^([a-zA-Z\d\.\-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
     const validatePassword = RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
 
     if (event.target.name === 'firstName') {

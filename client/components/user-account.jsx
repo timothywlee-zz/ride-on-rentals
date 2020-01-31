@@ -47,7 +47,6 @@ class UserAccount extends React.Component {
           </input>
           <div className='d-flex justify-content-center' style={{ padding: '0 2.5rem' }}>
             {!photo ? null : <button className='btn btn-danger' type='submit'> SUBMIT </button>}
-
           </div>
         </form>
         <div className=" d-flex justify-content-center " style={{ width: '70%', height: '100px', textAlign: 'center' }}>
@@ -72,7 +71,6 @@ class UserAccount extends React.Component {
         this.verification();
       })
       .catch(err => console.error(err));
-
   }
 
   onUploadChange(event) {
