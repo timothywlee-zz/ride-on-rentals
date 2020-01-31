@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Header from './header';
 import AppContext from '../lib/context';
+import { Link } from 'react-router-dom';
 
 class CarDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { car: null, video: false };
-    this.getDetails = this.getDetails.bind(this);
+    this.state = {
+      car: null,
+      video: false
+    };
   }
 
   componentDidMount() {
@@ -58,10 +60,10 @@ class CarDetails extends React.Component {
           linkTo={'/cars'}
           title={this.state.car.make}
           history={this.props.history}/>
-        <div
-          className="d-flex flex-column justify-content-center"
-          style={{ minHeight: '17em', background: 'black' }}>
-          {this.viewVideo()}
+        <div style={{ minHeight: '17em', background: 'black' }}>
+          {
+            this.viewVideo()
+          }
         </div>
         <div
           style={{ borderRadius: '.25em' }}
