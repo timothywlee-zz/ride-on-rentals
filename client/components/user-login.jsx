@@ -36,7 +36,7 @@ class UserLogIn extends React.Component {
       )
       .then(user => {
         this.context.login(user);
-        this.props.closeDrawer();
+        return this.props.history.push('/user');
       })
       .catch(err => console.error(err));
   }
@@ -64,7 +64,7 @@ class UserLogIn extends React.Component {
           <button
             className='userLogInSignUp'
             onClick={() => this.props.setView('signup')}>
-             SIGN UP
+              SIGN UP
           </button>
         </div>
       </div>

@@ -113,7 +113,6 @@ class CarDetails extends React.Component {
                       : {}
                   }
                   className='btn btn-outline-dark'>
-
                   <Link
                     style={
                       !car.availability

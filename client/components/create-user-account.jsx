@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React from 'react';
 
 class CreateAccount extends React.Component {
@@ -18,8 +19,7 @@ class CreateAccount extends React.Component {
   }
 
   inputHandler(event) {
-    this.setState({ [event.target.name]: event.target.value }); // since were handling multiple input elements, we add a name attribute to each element that way multiple inputs can use the same onChange handler.
-    // dynamically updates the properties in this.state
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   componentDidUpdate(prevProps, prevState) {
