@@ -1,6 +1,6 @@
-# Super Cars
+# Ride On Rentals
 
-A full stack (PERN) web application for users who want to rent and experience super cars.
+A full stack (PERN) car rental web application for users who want to experience driving super cars.
 
 > - Built by: `Timothy Lee, Ethan Cordes, Andrew Robins, Kamryn Min`
 
@@ -17,7 +17,7 @@ https://www.meistertask.com/app/project/5Y5dPX56/final-project-super-cars
 https://app.dbdesigner.net/designer/schema/0-super-cars
 
 ## Technologies Used
-
+- JavaScript
 - React.js
 - HTML5
 - CSS3
