@@ -1,46 +1,54 @@
-# GitHub Process
+# Super Cars
 
+A full stack (PERN) web application for users who want to rent and experience super cars.
 
-### Before you start a feature
+> - Built by: `Timothy Lee, Ethan Cordes, Andrew Robins, Kamryn Min`
 
-Make sure you are on the `dev` branch in your terminal
+### Figma
 
-Create a new branch `git checkout -b *feature-name*`
+https://www.figma.com/file/nromB5pPToLEc15l6IfesM/Final-Project-Layout?node-id=0%3A1
 
-When you complete one of the checklist items for the feature found in Meistertask:
+### Meistertask
 
-Add and commit your work! You can copy the message from Meistertask, or create your own.
+https://www.meistertask.com/app/project/5Y5dPX56/final-project-super-cars
 
-**Note**: You do not have to push the branch at this time
+### DB Schema
 
+https://app.dbdesigner.net/designer/schema/0-super-cars
 
-### Before you submit a pull request
+## Technologies Used
 
-Make sure you are on the `dev` branch in GitHub
+- React.js
+- HTML5
+- CSS3
+- Reactstrap
+- Bootstrap 4
+- Node.js
+- Express
+- Webpack 4
+- Babel / Babel loader
+- Bcrypt
+- PostgreSQL
+- AWS EC2
 
-If you did not add a meaningful commit message on the command line, add one now
+## Live Demo
 
-**Front End** Please include a screenshot of your progress with your PR
+Link: https://supercars.ethancordes.com
 
-Link your PR in the team Slack
+## Features
 
+- User can view a list of cars
+- User can filter cars by category, top speed, etc.
+- User can view details for each car
+- User can view a video of each car
+- User can create an account
+- User can login to their account
+- User can upload a photo
+- User can edit their account details
+- User can make a reservation
+- User can customize their reservation
+- User can view their past rentals
 
-### When you are pulling from `dev`
+## Preview
 
-Make sure you are on the `dev` branch in your terminal
-
-Update your `dev` branch `git pull origin dev`
-
-Update your system with any db changes `npm run db:import` 
-
-Install new packages (if any) `npm install`
-
-**If you are currently working on a feature and wish to update your feature branch**
-
-`git checkout dev`
-
-`git pull origin dev`
-
-`git checkout *your feature branch*`
-
-`git merge dev`
+![super-cars-demo](https://user-images.githubusercontent.com/55867613/73698404-ebe5d180-4695-11ea-89e4-d9c7dce11bd7.gif)
