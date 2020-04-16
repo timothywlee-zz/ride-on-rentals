@@ -24,6 +24,7 @@ https://app.dbdesigner.net/designer/schema/0-super-cars
 - HTML5
 - CSS3
 - Reactstrap
+- React Router
 - Bootstrap 4
 - Node.js
 - Express
