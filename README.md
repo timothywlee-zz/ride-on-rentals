@@ -30,6 +30,7 @@ https://app.dbdesigner.net/designer/schema/0-super-cars
 - Webpack 4
 - Babel / Babel loader
 - Pg-format
+- Multer
 - Bcrypt
 - PostgreSQL
 - AWS EC2
