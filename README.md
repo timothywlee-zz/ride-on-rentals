@@ -1,7 +1,8 @@
 # Ride On Rentals
 
 A full stack (PERN) car rental web application for users who want to experience driving super cars.
-Changed application name from **Super Cars** to **Ride On Rentals**
+
+Changed application name from **Super Cars** to **Ride On Rentals**.
 
 > - Built by: `Timothy Lee, Ethan Cordes, Andrew Robins, Kamryn Min`
 
